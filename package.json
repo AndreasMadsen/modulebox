@@ -1,0 +1,27 @@
+{
+  "name": "modulebox",
+  "description": "node.js like module environment in the browser",
+  "version": "0.1.0",
+  "author": "Andreas Madsen <amwebdk@gmail.com>",
+  "main": "./modulebox.js",
+  "scripts": {
+    "test": "tap test/simple/*"
+  },
+  "repository" : {
+    "type": "git",
+    "url": "git://github.com/AndreasMadsen/modulebox.git"
+  },
+  "keywords": [
+    "module",
+    "require",
+    "exports"
+  ],
+  "devDependencies": {
+    "tap": "0.3.x"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "0.8",
+    "npm": "1"
+  }
+}
