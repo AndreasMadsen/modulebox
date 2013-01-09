@@ -57,9 +57,9 @@ http.createServer(function (req, res) {
 ```javascript
 (function () {
   var box = window.modulebox({
-    url: function (acuried, source, request) {
+    url: function (acquired, source, request) {
       return window.location.origin + '/module' +
-        '?acuried=' + acuried +
+        '?acquired=' + acquired +
         '&source=' + source +
         '&request' + request;
     }
