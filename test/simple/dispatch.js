@@ -4,8 +4,6 @@ var path = require('path');
 var endpoint = require('endpoint');
 var modulebox = require('../../lib/dispatch.js');
 
-require('trace');
-
 var test = require('tap').test;
 
 var box = modulebox({
