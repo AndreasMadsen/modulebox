@@ -1,4 +1,6 @@
-<module><file>
-/* single.js */
-/* end */</file>
-</module>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<file path="/single.js"><![CDATA[/* single.js */
+/* end */]]></file>
+<map>{}</map>
+</modules>

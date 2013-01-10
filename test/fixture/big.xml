@@ -1,5 +1,6 @@
-<module><file>
-/* big.js */
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<file path="/big.js"><![CDATA[/* big.js */
 // abcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyz
 // abcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyz
 // abcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyz
@@ -1057,5 +1058,6 @@
 // abcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyz
 // abcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyz
 // abcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyz
-/* end */</file>
-</module>
+/* end */]]></file>
+<map>{}</map>
+</modules>

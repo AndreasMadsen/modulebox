@@ -7,7 +7,9 @@ var modulebox = require('../../lib/dispatch.js');
 var test = require('tap').test;
 
 var box = modulebox({
-  root: path.resolve(__dirname, '..', 'localized')
+  root: path.resolve(__dirname, '..', 'localized'),
+
+  modules: 'modules'
 });
 
 test('simple single module request', function (t) {
@@ -53,7 +55,7 @@ test('simple request from none root location', function (t) {
 });
 
 test('complex dependencies tree', function (t) {
-  box.dispatch({ request: '/index.js' }).pipe(endpoint(function (err, actual) {
+  box.dispatch({ request: '/complex.js' }).pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
     var expectedPath = path.resolve(__dirname, '..', 'fixture', 'complex.xml');

@@ -1,17 +1,17 @@
-<module><file>
-/* index.js */
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<file path="/complex.js"><![CDATA[/* index.js */
 require('./common.js');
 require('/common.js');
 require('./common_require.js');
 require('/common_require.js');
 
-require('big.js');
+require('missing.js');
 
 exports.common = require('./common');
 exports.simple = require('simple');
-/* end */</file>
-<file>
-/* common.js */
+/* end */]]></file>
+<file path="/common.js"><![CDATA[/* common.js */
 if (typeof global.commonLoaded === 'undefined') {
   global.commonLoaded = 0;
 }
@@ -19,53 +19,16 @@ if (typeof global.commonLoaded === 'undefined') {
 global.commonLoaded += 1;
 
 module.exports = global.commonLoaded;
-/* end */</file>
-<file>
-/* common.js */
-if (typeof global.commonLoaded === 'undefined') {
-  global.commonLoaded = 0;
-}
-
-global.commonLoaded += 1;
-
-module.exports = global.commonLoaded;
-/* end */</file>
-<file>
-/* common_require.js */
+/* end */]]></file>
+<file path="/common_require.js"><![CDATA[/* common_require.js */
 require('./common');
-/* end */</file>
-<file>
-/* common_require.js */
-require('./common');
-/* end */</file>
-<file>
-/* common.js */
-if (typeof global.commonLoaded === 'undefined') {
-  global.commonLoaded = 0;
-}
-
-global.commonLoaded += 1;
-
-module.exports = global.commonLoaded;
-/* end */</file>
-<file>
-/* common.js */
-if (typeof global.commonLoaded === 'undefined') {
-  global.commonLoaded = 0;
-}
-
-global.commonLoaded += 1;
-
-module.exports = global.commonLoaded;
-/* end */</file>
-<file>
-/* common.js */
-if (typeof global.commonLoaded === 'undefined') {
-  global.commonLoaded = 0;
-}
-
-global.commonLoaded += 1;
-
-module.exports = global.commonLoaded;
-/* end */</file>
-</module>
+/* end */]]></file>
+<file path="/modules/simple/index.js"><![CDATA[/* modules/simple/index.js */
+module.exports = require('./package.json');
+/* end */]]></file>
+<file path="/modules/simple/package.json"><![CDATA[{
+  "name": "std",
+  "main": "index.js"
+}]]></file>
+<map>{"/complex.js":{"./common.js":"/common.js","/common.js":"/common.js","./common_require.js":"/common_require.js","/common_require.js":"/common_require.js","./common":"/common.js","missing.js":null,"simple":"/modules/simple/index.js"},"/common_require.js":{"./common":"/common.js"},"/modules/simple/index.js":{"./package.json":"/modules/simple/package.json"}}</map>
+</modules>

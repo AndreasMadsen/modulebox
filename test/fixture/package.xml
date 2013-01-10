@@ -1,6 +1,8 @@
-<module><file>
-{
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<file path="/modules/simple/package.json"><![CDATA[{
   "name": "std",
   "main": "index.js"
-}</file>
-</module>
+}]]></file>
+<map>{}</map>
+</modules>
