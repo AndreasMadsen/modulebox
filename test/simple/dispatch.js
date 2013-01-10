@@ -22,3 +22,45 @@ test('simple single module request', function (t) {
     });
   }));
 });
+
+test('big multi chunk file', function (t) {
+  box.dispatch({ request: '/big.js' }).pipe(endpoint(function (err, actual) {
+    t.equal(err, null);
+
+    var expectedPath = path.resolve(__dirname, '..', 'fixture', 'big.xml');
+    fs.readFile(expectedPath, 'utf8', function (err, expected) {
+      t.equal(err, null);
+      t.equal(actual.toString(), expected);
+      t.end();
+    });
+  }));
+});
+
+test('simple request from none root location', function (t) {
+  box.dispatch({
+    source: '/modules/simple/index.js',
+    request: './package.json'
+  }).pipe(endpoint(function (err, actual) {
+    t.equal(err, null);
+
+    var expectedPath = path.resolve(__dirname, '..', 'fixture', 'package.xml');
+    fs.readFile(expectedPath, 'utf8', function (err, expected) {
+      t.equal(err, null);
+      t.equal(actual.toString(), expected);
+      t.end();
+    });
+  }));
+});
+
+test('complex dependencies tree', function (t) {
+  box.dispatch({ request: '/index.js' }).pipe(endpoint(function (err, actual) {
+    t.equal(err, null);
+
+    var expectedPath = path.resolve(__dirname, '..', 'fixture', 'complex.xml');
+    fs.readFile(expectedPath, 'utf8', function (err, expected) {
+      t.equal(err, null);
+      t.equal(actual.toString(), expected);
+      t.end();
+    });
+  }));
+});
