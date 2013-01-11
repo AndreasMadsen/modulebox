@@ -65,11 +65,20 @@ http.createServer(function (req, res) {
     }
   });
 
-  // You only need to require modules asynchronously if they are not defined
+  // You only need to load modules asynchronously if they are not defined
   // in a simple `require('string')` format within the `root` directory.
-  box.require('/index.js', function (err, index) {
+  // You load them by calling require.ensure (takes an array too). Its
+  // important to note that calling ensure don't compile the module, it is
+  // just insured that it can be required synchronously without blocking
+  // the browserl
+  box.require.ensure('/index.js', function (err) {
+    // We now know that /index.js and all its dependencies are loaded
     if (err) return alert('request failure: ' + err.message);
 
+    // Get the module
+    index = require('/index.js');
+
+    // Run module.exports function
     index();
   });
 })();
