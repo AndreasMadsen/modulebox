@@ -59,7 +59,6 @@ test('complex dependencies tree', function (t) {
   box.dispatch({ request: '/complex.js' }).pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
-    var expectedPath = path.resolve(__dirname, '..', 'fixture', 'complex.xml');
     fs.readFile(fixture('complex'), 'utf8', function (err, expected) {
       t.equal(err, null);
       t.equal(actual.toString(), expected);
@@ -85,8 +84,8 @@ test('complex dependencies tree with acuired files', function (t) {
 
 test('request acquired file', function (t) {
   box.dispatch({
-    request: '/complex.js',
-    acquired: ['/complex.js']
+    request: '/single.js',
+    acquired: ['/single.js']
   }).pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
