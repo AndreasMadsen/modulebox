@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<file path="/missing_require.js"><![CDATA[
+require('/missing.js');
+]]></file>
+<map>{"/missing_require.js":{"/missing.js":{"code":"MODULE_NOT_FOUND","message":"Cannot find module '/missing.js'","name":"Error"}}}</map>
+</modules>

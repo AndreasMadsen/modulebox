@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<file path="/faulty_require.js"><![CDATA[
+require('faulty');
+]]></file>
+<map>{"/faulty_require.js":{"faulty":{"message":"Unexpected token s","name":"SyntaxError"}}}</map>
+</modules>

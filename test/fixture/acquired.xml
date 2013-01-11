@@ -6,8 +6,6 @@ require('/common.js');
 require('./common_require.js');
 require('/common_require.js');
 
-require('missing.js');
-
 exports.common = require('./common');
 exports.simple = require('simple');
 /* end */]]></file>
@@ -23,5 +21,5 @@ module.exports = global.commonLoaded;
 <file path="/common_require.js"><![CDATA[/* common_require.js */
 require('./common');
 /* end */]]></file>
-<map>{"/complex.js":{"./common.js":"/common.js","/common.js":"/common.js","./common_require.js":"/common_require.js","/common_require.js":"/common_require.js","./common":"/common.js","missing.js":null,"simple":"/modules/simple/index.js"},"/common_require.js":{"./common":"/common.js"}}</map>
+<map>{"/complex.js":{"./common.js":"/common.js","/common.js":"/common.js","./common_require.js":"/common_require.js","/common_require.js":"/common_require.js","./common":"/common.js","simple":"/modules/simple/index.js"},"/common_require.js":{"./common":"/common.js"}}</map>
 </modules>

@@ -1,0 +1,2 @@
+
+require('/missing.js');
