@@ -12,12 +12,15 @@ var box = modulebox({
   modules: 'modules'
 });
 
+function fixture(name) {
+  return path.resolve(__dirname, '..', 'fixture', name + '.xml');
+}
+
 test('simple single module request', function (t) {
   box.dispatch({ request: '/single.js' }).pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
-    var expectedPath = path.resolve(__dirname, '..', 'fixture', 'single.xml');
-    fs.readFile(expectedPath, 'utf8', function (err, expected) {
+    fs.readFile(fixture('single'), 'utf8', function (err, expected) {
       t.equal(err, null);
       t.equal(actual.toString(), expected);
       t.end();
@@ -29,8 +32,7 @@ test('big multi chunk file', function (t) {
   box.dispatch({ request: '/big.js' }).pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
-    var expectedPath = path.resolve(__dirname, '..', 'fixture', 'big.xml');
-    fs.readFile(expectedPath, 'utf8', function (err, expected) {
+    fs.readFile(fixture('big'), 'utf8', function (err, expected) {
       t.equal(err, null);
       t.equal(actual.toString(), expected);
       t.end();
@@ -45,8 +47,7 @@ test('simple request from none root location', function (t) {
   }).pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
-    var expectedPath = path.resolve(__dirname, '..', 'fixture', 'package.xml');
-    fs.readFile(expectedPath, 'utf8', function (err, expected) {
+    fs.readFile(fixture('package'), 'utf8', function (err, expected) {
       t.equal(err, null);
       t.equal(actual.toString(), expected);
       t.end();
@@ -59,7 +60,37 @@ test('complex dependencies tree', function (t) {
     t.equal(err, null);
 
     var expectedPath = path.resolve(__dirname, '..', 'fixture', 'complex.xml');
-    fs.readFile(expectedPath, 'utf8', function (err, expected) {
+    fs.readFile(fixture('complex'), 'utf8', function (err, expected) {
+      t.equal(err, null);
+      t.equal(actual.toString(), expected);
+      t.end();
+    });
+  }));
+});
+
+test('complex dependencies tree with acuired files', function (t) {
+  box.dispatch({
+    request: '/complex.js',
+    acquired: ['/modules/simple/index.js', '/modules/simple/package.json']
+  }).pipe(endpoint(function (err, actual) {
+    t.equal(err, null);
+
+    fs.readFile(fixture('acuired'), 'utf8', function (err, expected) {
+      t.equal(err, null);
+      t.equal(actual.toString(), expected);
+      t.end();
+    });
+  }));
+});
+
+test('request acquired file', function (t) {
+  box.dispatch({
+    request: '/complex.js',
+    acquired: ['/complex.js']
+  }).pipe(endpoint(function (err, actual) {
+    t.equal(err, null);
+
+    fs.readFile(fixture('all_acquired'), 'utf8', function (err, expected) {
       t.equal(err, null);
       t.equal(actual.toString(), expected);
       t.end();
