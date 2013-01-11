@@ -96,3 +96,17 @@ test('request acquired file', function (t) {
     });
   }));
 });
+
+test('request file do not exists', function (t) {
+  box.dispatch({
+    request: '/missing.js'
+  }).pipe(endpoint(function (err, actual) {
+    t.equal(err, null);
+
+    fs.readFile(fixture('missing'), 'utf8', function (err, expected) {
+      t.equal(err, null);
+      t.equal(actual.toString(), expected);
+      t.end();
+    });
+  }));
+});
