@@ -28,5 +28,5 @@ module.exports = require('./package.json');
   "name": "std",
   "main": "index.js"
 }]]></file>
-<map>{"/complex.js":{"./common.js":"/common.js","/common.js":"/common.js","./common_require.js":"/common_require.js","/common_require.js":"/common_require.js","./common":"/common.js","simple":"/modules/simple/index.js"},"/common_require.js":{"./common":"/common.js"},"/modules/simple/index.js":{"./package.json":"/modules/simple/package.json"}}</map>
+<map>{"/complex.js":{"./common":"/common.js","./common.js":"/common.js","./common_require.js":"/common_require.js","/common.js":"/common.js","/common_require.js":"/common_require.js","simple":"/modules/simple/index.js"},"/common_require.js":{"./common":"/common.js"},"/modules/simple/index.js":{"./package.json":"/modules/simple/package.json"}}</map>
 </modules>
