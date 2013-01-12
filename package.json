@@ -5,7 +5,8 @@
   "author": "Andreas Madsen <amwebdk@gmail.com>",
   "main": "./modulebox.js",
   "scripts": {
-    "test": "tap test/simple/*"
+    "test": "tap test/server/*",
+    "test-browser": "node test/browser-runner/start.js"
   },
   "repository" : {
     "type": "git",
@@ -17,13 +18,13 @@
     "exports"
   ],
   "dependencies": {
-    "async": "0.1.x",
     "endpoint": "0.2.x",
     "localizer": "0.2.x",
     "detective": "0.2.x"
   },
   "devDependencies": {
-    "tap": "0.3.x"
+    "tap": "0.3.x",
+    "blow": "0.6.x"
   },
   "license": "MIT",
   "engines": {
