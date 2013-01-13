@@ -37,10 +37,17 @@ var box = modulebox({
 http.createServer(function (req, res) {
     var href = url.parse(req.url, true);
 
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
     if (href.pathname === '/core.js') {
       req.pipe( filed(box.clientCore) ).pipe(res);
-    } else if (req.pathname === '/module') {
-      req.pipe( box.dispatch(href.query) ).pipe(req);
+    } else if (href.pathname === '/module') {
+      console.log(href.query);
+      box.dispatch({
+        acquired: JSON.parse(href.query.acquired),
+        source: JSON.parse(href.query.source),
+        request: JSON.parse(href.query.request)
+      }).pipe(res);
     } else {
       res.statusCode = 404;
       res.end();
