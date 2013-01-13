@@ -29,7 +29,7 @@ blow(files, {
 //
 
 var box = modulebox({
-  root: path.resolve(__dirname, 'localized'),
+  root: path.resolve(__dirname, '..', 'localized'),
 
   modules: 'modules'
 });
@@ -42,7 +42,6 @@ http.createServer(function (req, res) {
     if (href.pathname === '/core.js') {
       req.pipe( filed(box.clientCore) ).pipe(res);
     } else if (href.pathname === '/module') {
-      console.log(href.query);
       box.dispatch({
         acquired: JSON.parse(href.query.acquired),
         source: JSON.parse(href.query.source),
