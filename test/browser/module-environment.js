@@ -97,4 +97,11 @@ describe('module environment', function () {
     assert.equal(exports.undefined, (void 0));
     window.undefined = (void 0);
   });
+
+  it('require.resolve return filepath', function () {
+    var exports = box.require('/self_export.js');
+
+    assert.equal(exports.require.resolve('/self_export.js'), '/self_export.js');
+  });
+
 });

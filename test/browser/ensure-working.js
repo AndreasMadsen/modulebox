@@ -73,6 +73,31 @@ describe('module ensure on a working destination', function () {
     assert.equal(errors[0], errors[1]);
   });
 
+  it('require.resolve call should throw error', function () {
+    var errors = [];
+
+    try {
+      box.require.resolve('/missing.js');
+    } catch (err) {
+      errors.push(err);
+    }
+
+    try {
+      box.require.resolve('/missing.js');
+    } catch (err) {
+      errors.push(err);
+    }
+
+    assert.equal(send, 1);
+
+    assert.equal(errors[0].message, 'Cannot find module \'/missing.js\'');
+    assert.equal(errors[0].name, 'Error');
+    assert.equal(errors[0].code, 'MODULE_NOT_FOUND');
+
+    // The error object is expected to be the same
+    assert.equal(errors[0], errors[1]);
+  });
+
   it('require.ensure returns no error if module was found', function (done) {
     box.require.ensure('/self_export.js', function (err) {
       assert.equal(send, 2);
@@ -94,5 +119,9 @@ describe('module ensure on a working destination', function () {
 
       done(null);
     });
+  });
+
+  it('require.resolve return filepath', function () {
+    assert.equal(box.require.resolve('/self_export.js'), '/self_export.js');
   });
 });

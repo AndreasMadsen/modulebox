@@ -55,6 +55,30 @@ describe('404 response from request', function () {
     // The error object is expected to be the same
     assert.equal(errors[0], errors[1]);
   });
+
+  it('require.resolve call should throw error', function () {
+    var errors = [];
+
+    try {
+      notFoundBox.require.resolve('/single.js');
+    } catch (err) {
+      errors.push(err);
+    }
+
+    try {
+      notFoundBox.require.resolve('/single.js');
+    } catch (err) {
+      errors.push(err);
+    }
+
+    assert.equal(send, 1);
+
+    assert.equal(errors[0].message, 'Got faulty status code 404');
+    assert.equal(errors[0].name, 'Error');
+
+    // The error object is expected to be the same
+    assert.equal(errors[0], errors[1]);
+  });
 });
 
 describe('broken response from request', function () {
@@ -99,6 +123,30 @@ describe('broken response from request', function () {
 
     try {
       brokenBox.require('/single.js');
+    } catch (err) {
+      errors.push(err);
+    }
+
+    assert.equal(send, 1);
+
+    assert.equal(errors[0].message, 'Could not connect');
+    assert.equal(errors[0].name, 'Error');
+
+    // The error object is expected to be the same
+    assert.equal(errors[0], errors[1]);
+  });
+
+  it('require.resolve call should throw error', function () {
+    var errors = [];
+
+    try {
+      brokenBox.require.resolve('/single.js');
+    } catch (err) {
+      errors.push(err);
+    }
+
+    try {
+      brokenBox.require.resolve('/single.js');
     } catch (err) {
       errors.push(err);
     }
