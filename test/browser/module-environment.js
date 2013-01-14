@@ -23,7 +23,7 @@ describe('module server is a working destination', function () {
 
   it('require.ensure returns no error if module was found', function (done) {
     box.require.ensure('/self_export.js', function (err) {
-      assert.equal(send, 2);
+      assert.equal(send, 1);
       assert.deepEqual(acquired, []);
       assert.deepEqual(source, '/');
       assert.deepEqual(request, '/self_export.js');
