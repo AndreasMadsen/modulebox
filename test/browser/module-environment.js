@@ -68,4 +68,33 @@ describe('module environment', function () {
     assert.equal(exports.__dirname, '/');
   });
 
+  it('require.ensure exists and use its own resolve catch', function (done) {
+    var exports = box.require('/self_export.js');
+
+    exports.require.ensure('/self_export.js', function (err) {
+      assert.equal(send, 2);
+      assert.deepEqual(acquired, ['/self_export.js']);
+      assert.deepEqual(source, '/self_export.js');
+      assert.deepEqual(request, '/self_export.js');
+
+      assert.equal(err, null);
+
+      done(null);
+    });
+  });
+
+  it('require use catched object module object', function () {
+    var exports = box.require('/self_export.js');
+
+    assert.equal(exports, exports.require('/self_export.js'));
+  });
+
+
+  it('undefined can\'t be affected', function () {
+    var exports = box.require('/self_export.js');
+
+    window.undefined = 'so wrong';
+    assert.equal(exports.undefined, (void 0));
+    window.undefined = (void 0);
+  });
 });
