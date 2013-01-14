@@ -1,7 +1,7 @@
 
 var assert = chai.assert;
 
-describe('module server is a working destination', function () {
+describe('module environment', function () {
   var send = 0;
   var acquired = null;
   var source = null;
