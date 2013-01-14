@@ -48,6 +48,31 @@ describe('module server is a working destination', function () {
     });
   });
 
+  it('require call should throw error', function () {
+    var errors = [];
+
+    try {
+      box.require('/missing.js');
+    } catch (err) {
+      errors.push(err);
+    }
+
+    try {
+      box.require('/missing.js');
+    } catch (err) {
+      errors.push(err);
+    }
+
+    assert.equal(send, 1);
+
+    assert.equal(errors[0].message, 'Cannot find module \'/missing.js\'');
+    assert.equal(errors[0].name, 'Error');
+    assert.equal(errors[0].code, 'MODULE_NOT_FOUND');
+
+    // The error object is expected to be the same
+    assert.equal(errors[0], errors[1]);
+  });
+
   it('require.ensure returns no error if module was found', function (done) {
     box.require.ensure('/self_export.js', function (err) {
       assert.equal(send, 2);
@@ -70,5 +95,26 @@ describe('module server is a working destination', function () {
       done(null);
     });
   });
+
+  it('modules are compiled on first require and then reused', function () {
+    // This file contains `module.exports = module`;
+    var moduleObj = box.require('/self_export.js');
+
+    assert.ok(typeof moduleObj === 'object' && moduleObj !== null, 'is object');
+    assert.equal(moduleObj, box.require('/self_export.js'));
+  });
+
+  it('module.exports is the exported property', function () {
+    var moduleObj = box.require('/self_export.js');
+
+    assert.equal(moduleObj, moduleObj.exports);
+  });
+
+  it('module.filename matches resolved', function () {
+    var moduleObj = box.require('/self_export.js');
+
+    assert.equal(moduleObj.filename, box.require.resolve('/self_export.js'));
+  });
+
 });
 
