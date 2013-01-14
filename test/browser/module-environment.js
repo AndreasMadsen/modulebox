@@ -35,23 +35,37 @@ describe('module environment', function () {
   });
 
   it('modules are compiled on first require and then reused', function () {
-    // This file contains `module.exports = module`;
-    var moduleObj = box.require('/self_export.js');
+    var exports = box.require('/self_export.js');
 
-    assert.ok(typeof moduleObj === 'object' && moduleObj !== null, 'is object');
-    assert.equal(moduleObj, box.require('/self_export.js'));
+    assert.ok(typeof exports === 'object' && exports !== null, 'is object');
+    assert.equal(exports, box.require('/self_export.js'));
   });
 
   it('module.exports is the exported property', function () {
-    var moduleObj = box.require('/self_export.js');
+    var exports = box.require('/self_export.js');
+    var module = exports.module;
 
-    assert.equal(moduleObj, moduleObj.exports);
+    assert.equal(exports, module.exports);
   });
 
   it('module.filename matches resolved', function () {
-    var moduleObj = box.require('/self_export.js');
+    var exports = box.require('/self_export.js');
+    var module = exports.module;
 
-    assert.equal(moduleObj.filename, box.require.resolve('/self_export.js'));
+    assert.equal(module.filename, '/self_export.js');
+  });
+
+  it('scroped __filename matches resolved', function () {
+    var exports = box.require('/self_export.js');
+    var module = exports.module;
+
+    assert.equal(module.filename, '/self_export.js');
+  });
+
+  it('scroped __dirname matches resolved', function () {
+    var exports = box.require('/self_export.js');
+
+    assert.equal(exports.__dirname, '/');
   });
 
 });

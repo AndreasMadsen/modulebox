@@ -95,26 +95,4 @@ describe('module ensure on a working destination', function () {
       done(null);
     });
   });
-
-  it('modules are compiled on first require and then reused', function () {
-    // This file contains `module.exports = module`;
-    var moduleObj = box.require('/self_export.js');
-
-    assert.ok(typeof moduleObj === 'object' && moduleObj !== null, 'is object');
-    assert.equal(moduleObj, box.require('/self_export.js'));
-  });
-
-  it('module.exports is the exported property', function () {
-    var moduleObj = box.require('/self_export.js');
-
-    assert.equal(moduleObj, moduleObj.exports);
-  });
-
-  it('module.filename matches resolved', function () {
-    var moduleObj = box.require('/self_export.js');
-
-    assert.equal(moduleObj.filename, box.require.resolve('/self_export.js'));
-  });
-
 });
-
