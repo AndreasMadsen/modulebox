@@ -27,7 +27,7 @@ fs.utimesSync(
   pointerMtime
 );
 
-test('simple single module request', function (t) {
+test('no resources is send makes mtime null and resolved is hash', function (t) {
   var bundle = box.dispatch({
     request: '/single.js',
     acquired: ['/single.js']
@@ -47,7 +47,7 @@ test('simple single module request', function (t) {
   }));
 });
 
-test('simple single module request', function (t) {
+test('when first resource isn\'t fetched meta is null', function (t) {
   var bundle = box.dispatch({ request: '/single.js' });
 
   var meta;
@@ -62,7 +62,7 @@ test('simple single module request', function (t) {
   }));
 });
 
-test('simple single module request', function (t) {
+test('when all (one) resources is fetched meta is set', function (t) {
   var bundle = box.dispatch({ request: '/single.js' });
 
   var meta;
@@ -79,7 +79,7 @@ test('simple single module request', function (t) {
   }));
 });
 
-test('simple single module request', function (t) {
+test('when not all resources is fetched meta is null', function (t) {
   var bundle = box.dispatch({ request: '/pointer.js' });
 
   var meta;
@@ -95,7 +95,7 @@ test('simple single module request', function (t) {
   }));
 });
 
-test('simple single module request', function (t) {
+test('when all resources is fetched meta is set', function (t) {
   var bundle = box.dispatch({ request: '/pointer.js' });
 
   var meta;
@@ -112,7 +112,7 @@ test('simple single module request', function (t) {
   }));
 });
 
-test('simple single module request', function (t) {
+test('mtime and hash depends on the acquired files', function (t) {
   var bundle = box.dispatch({
     request: '/pointer.js',
     acquired: ['/single.js']
