@@ -12,7 +12,7 @@ var box = modulebox({
   modules: 'modules'
 });
 
-// Set mtime on /single.js and /pointer.js for consistency
+// Set mtime on /single.js, /pointer.js and /faulty_require.js for consistency
 var singleMtime = 1358000000;
 fs.utimesSync(
   path.resolve(__dirname, '..', 'localized', 'single.js'),
