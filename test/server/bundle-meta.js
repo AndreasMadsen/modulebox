@@ -64,7 +64,9 @@ test('when first resource isn\'t fetched meta is null', function (t) {
 
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
-    t.equal(meta, null);
+    t.equal(meta.mtime, null);
+    t.equal(meta.hash, null);
+
     t.end();
   }));
 });
@@ -96,7 +98,8 @@ test('when not all resources is fetched meta is null', function (t) {
 
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
-    t.equal(meta, null);
+    t.equal(meta.mtime, null);
+    t.equal(meta.hash, null);
 
     t.end();
   }));
@@ -151,7 +154,8 @@ test('loading faulty module for first time should send null meta data', function
 
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
-    t.equal(meta, null);
+    t.equal(meta.mtime, null);
+    t.equal(meta.hash, null);
 
     t.end();
   }));
