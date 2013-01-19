@@ -27,6 +27,13 @@ fs.utimesSync(
   pointerMtime
 );
 
+var faultyMtime = 1357000000;
+fs.utimesSync(
+  path.resolve(__dirname, '..', 'localized', 'faulty_require.js'),
+  1350000000,
+  pointerMtime
+);
+
 test('no resources is send makes mtime null and resolved is hash', function (t) {
   var bundle = box.dispatch({
     request: '/single.js',
@@ -127,6 +134,43 @@ test('mtime and hash depends on the acquired files', function (t) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), pointerMtime * 1000);
     t.equal(meta.hash, 'a8417aa246cf8621c1fa06c6f56f3c743dab5e88d869fd3a8a3ca2858a695722');
+
+    t.end();
+  }));
+});
+
+test('loading faulty module for first time should send null meta data', function (t) {
+  var bundle = box.dispatch({
+    request: '/faulty_require.js',
+  });
+
+  var meta;
+  bundle.once('meta', function (data) {
+    meta = data;
+  });
+
+  bundle.pipe(endpoint(function (err) {
+    t.equal(err, null);
+    t.equal(meta, null);
+
+    t.end();
+  }));
+});
+
+test('when loading faulty module that mtime and hash can be fetched', function (t) {
+  var bundle = box.dispatch({
+    request: '/faulty_require.js',
+  });
+
+  var meta;
+  bundle.once('meta', function (data) {
+    meta = data;
+  });
+
+  bundle.pipe(endpoint(function (err) {
+    t.equal(err, null);
+    t.equal(meta.mtime.getTime(), faultyMtime * 1000);
+    t.equal(meta.hash, '12d2aff6b1b4e790468a4312a457882a73ba8ad67ab5b8afc864a67bbea03b29');
 
     t.end();
   }));
