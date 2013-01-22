@@ -33,15 +33,20 @@ var server = http.createServer(function (req, res) {
 function request(href, info, callback) {
   var send = url.parse(href);
       send.headers = {};
+      send.method = info.method || 'GET';
 
   if (info.mtime) send.headers['if-modified-since'] = info.mtime.toUTCString();
   if (info.hash) send.headers['if-none-match'] = info.hash;
 
-  return http.get(send, function (res) {
+  var req = http.request(send, function (res) {
     res.pipe(endpoint(function (err, data) {
       callback(err, res, data);
     }));
   });
+
+  req.end();
+
+  return req;
 }
 
 server.listen(0, '127.0.0.1', function () {
@@ -50,6 +55,8 @@ server.listen(0, '127.0.0.1', function () {
   test('no cache headers on first request', function (t) {
     request(hostname, {}, function (err, res, body) {
       t.equal(err, null);
+
+      t.notEqual(body.toString(), '');
 
       t.equal(res.statusCode, 200);
       t.equal(res.headers['content-type'], 'application/xml; charset=utf-8');
@@ -63,8 +70,10 @@ server.listen(0, '127.0.0.1', function () {
   var expectedMtime = new Date(singleMtime * 1000);
   var expectedHash = '9e7c61311c0ad858cd4001679ca48870fbaac7cdfb52abfba4ecc936233e0a05';
   test('no cache headers on first request', function (t) {
-    request(hostname, {}, function (err, res) {
+    request(hostname, {}, function (err, res, body) {
       t.equal(err, null);
+
+      t.notEqual(body.toString(), '');
 
       t.equal(res.statusCode, 200);
       t.equal(res.headers['content-type'], 'application/xml; charset=utf-8');
@@ -79,8 +88,44 @@ server.listen(0, '127.0.0.1', function () {
     request(hostname, {
       hash: 'W/"' + expectedHash + '"',
       mtime: expectedMtime
-    }, function (err, res) {
+    }, function (err, res, body) {
       t.equal(err, null);
+
+      t.equal(body.toString(), '');
+
+      t.equal(res.statusCode, 304);
+      t.equal(res.headers['content-type'], 'application/xml; charset=utf-8');
+      t.equal(res.headers.etag, 'W/"' + expectedHash + '"');
+      t.equal(Date.parse(res.headers['last-modified']), expectedMtime.getTime());
+
+      t.end();
+    });
+  });
+
+  test('if HEAD request was send header should be send', function (t) {
+    request(hostname, { method: 'HEAD' }, function (err, res, body) {
+      t.equal(err, null);
+
+      t.equal(body.toString(), '');
+
+      t.equal(res.statusCode, 200);
+      t.equal(res.headers['content-type'], 'application/xml; charset=utf-8');
+      t.equal(res.headers.etag, 'W/"' + expectedHash + '"');
+      t.equal(Date.parse(res.headers['last-modified']), expectedMtime.getTime());
+
+      t.end();
+    });
+  });
+
+  test('if HEAD request was send header should be send', function (t) {
+    request(hostname, {
+      method: 'HEAD',
+      hash: 'W/"' + expectedHash + '"',
+      mtime: expectedMtime
+    }, function (err, res, body) {
+      t.equal(err, null);
+
+      t.equal(body.toString(), '');
 
       t.equal(res.statusCode, 304);
       t.equal(res.headers['content-type'], 'application/xml; charset=utf-8');
