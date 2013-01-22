@@ -68,7 +68,7 @@ server.listen(0, '127.0.0.1', function () {
 
       t.equal(res.statusCode, 200);
       t.equal(res.headers['content-type'], 'application/xml; charset=utf-8');
-      t.equal(res.headers.etag, '"' + expectedHash + '"');
+      t.equal(res.headers.etag, 'W/"' + expectedHash + '"');
       t.equal(Date.parse(res.headers['last-modified']), expectedMtime.getTime());
 
       t.end();
@@ -77,14 +77,14 @@ server.listen(0, '127.0.0.1', function () {
 
   test('no cache headers on first request', function (t) {
     request(hostname, {
-      hash: expectedHash,
+      hash: 'W/"' + expectedHash + '"',
       mtime: expectedMtime
     }, function (err, res) {
       t.equal(err, null);
 
       t.equal(res.statusCode, 304);
       t.equal(res.headers['content-type'], 'application/xml; charset=utf-8');
-      t.equal(res.headers.etag, '"' + expectedHash + '"');
+      t.equal(res.headers.etag, 'W/"' + expectedHash + '"');
       t.equal(Date.parse(res.headers['last-modified']), expectedMtime.getTime());
 
       t.end();

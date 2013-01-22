@@ -42,11 +42,11 @@ http.createServer(function (req, res) {
     if (href.pathname === '/core.js') {
       req.pipe( filed(box.clientCore) ).pipe(res);
     } else if (href.pathname === '/module') {
-      box.dispatch({
+      req.pipe(box.dispatch({
         acquired: JSON.parse(href.query.acquired),
         source: JSON.parse(href.query.source),
         request: JSON.parse(href.query.request)
-      }).pipe(res);
+      })).pipe(res);
     } else {
       res.statusCode = 404;
       res.end();
