@@ -18,9 +18,12 @@
     "exports"
   ],
   "dependencies": {
+    "async": "0.1.x",
     "endpoint": "0.2.x",
     "localizer": "0.2.x",
-    "detective": "0.2.x"
+    "detective": "0.2.x",
+    "startpoint": "0.2.x",
+    "notmodified": "0.2.x"
   },
   "devDependencies": {
     "tap": "0.3.x",
