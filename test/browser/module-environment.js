@@ -22,11 +22,11 @@ describe('module environment', function () {
   });
 
   it('require.ensure returns no error if module was found', function (done) {
-    box.require.ensure('/self_export.js', function (err) {
+    box.require.ensure(['/self_export.js'], function (err) {
       assert.equal(send, 1);
       assert.deepEqual(acquired, []);
       assert.deepEqual(source, '/');
-      assert.deepEqual(request, '/self_export.js');
+      assert.deepEqual(request, ['/self_export.js']);
 
       assert.equal(err, null);
 
@@ -71,11 +71,11 @@ describe('module environment', function () {
   it('require.ensure exists and use its own resolve catch', function (done) {
     var exports = box.require('/self_export.js');
 
-    exports.require.ensure('/self_export.js', function (err) {
+    exports.require.ensure(['/self_export.js'], function (err) {
       assert.equal(send, 2);
       assert.deepEqual(acquired, ['/self_export.js']);
       assert.deepEqual(source, '/self_export.js');
-      assert.deepEqual(request, '/self_export.js');
+      assert.deepEqual(request, ['/self_export.js']);
 
       assert.equal(err, null);
 

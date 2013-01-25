@@ -25,7 +25,11 @@ function matchResult(t, name, actual, callback) {
 }
 
 test('simple single module request', function (t) {
-  box.dispatch({ request: '/single.js' }).pipe(endpoint(function (err, actual) {
+  var bundle = box.dispatch({
+    request: ['/single.js']
+  });
+
+  bundle.pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
     matchResult(t, 'single', actual, t.end.bind(t));
@@ -33,7 +37,11 @@ test('simple single module request', function (t) {
 });
 
 test('big multi chunk file', function (t) {
-  box.dispatch({ request: '/big.js' }).pipe(endpoint(function (err, actual) {
+  var bundle = box.dispatch({
+    request: ['/big.js']
+  });
+
+  bundle.pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
     matchResult(t, 'big', actual, t.end.bind(t));
@@ -41,10 +49,12 @@ test('big multi chunk file', function (t) {
 });
 
 test('simple request from none root location', function (t) {
-  box.dispatch({
+  var bundle = box.dispatch({
     source: '/modules/simple/index.js',
-    request: './package.json'
-  }).pipe(endpoint(function (err, actual) {
+    request: ['./package.json']
+  });
+
+  bundle.pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
     matchResult(t, 'package', actual, t.end.bind(t));
@@ -52,7 +62,11 @@ test('simple request from none root location', function (t) {
 });
 
 test('complex dependencies tree', function (t) {
-  box.dispatch({ request: '/complex.js' }).pipe(endpoint(function (err, actual) {
+  var bundle = box.dispatch({
+    request: ['/complex.js']
+  });
+
+  bundle.pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
     matchResult(t, 'complex', actual, t.end.bind(t));
@@ -60,10 +74,12 @@ test('complex dependencies tree', function (t) {
 });
 
 test('complex dependencies tree with acquired files', function (t) {
-  box.dispatch({
-    request: '/complex.js',
+  var bundle = box.dispatch({
+    request: ['/complex.js'],
     acquired: ['/modules/simple/index.js', '/modules/simple/package.json']
-  }).pipe(endpoint(function (err, actual) {
+  });
+
+  bundle.pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
     matchResult(t, 'acquired', actual, t.end.bind(t));
@@ -71,10 +87,12 @@ test('complex dependencies tree with acquired files', function (t) {
 });
 
 test('request acquired file', function (t) {
-  box.dispatch({
-    request: '/single.js',
+  var bundle = box.dispatch({
+    request: ['/single.js'],
     acquired: ['/single.js']
-  }).pipe(endpoint(function (err, actual) {
+  });
+
+  bundle.pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
     matchResult(t, 'all_acquired', actual, t.end.bind(t));
@@ -82,16 +100,16 @@ test('request acquired file', function (t) {
 });
 
 test('request dependency do not exists', function (t) {
-  var data = box.dispatch({
-    request: '/missing_require.js'
+  var bundle = box.dispatch({
+    request: ['/missing_require.js']
   });
 
   var warning = null;
-  data.once('warning', function (err) {
+  bundle.once('warning', function (err) {
     warning = err;
   });
 
-  data.pipe(endpoint(function (err, actual) {
+  bundle.pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
     t.equal(warning.message, 'Cannot find module \'/missing.js\'');
@@ -103,16 +121,16 @@ test('request dependency do not exists', function (t) {
 });
 
 test('request could not be resolved', function (t) {
-  var data = box.dispatch({
-    request: '/missing.js'
+  var bundle = box.dispatch({
+    request: ['/missing.js']
   });
 
   var warning = null;
-  data.once('warning', function (err) {
+  bundle.once('warning', function (err) {
     warning = err;
   });
 
-  data.pipe(endpoint(function (err, actual) {
+  bundle.pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
     matchResult(t, 'file_missing', actual, function () {
@@ -126,16 +144,16 @@ test('request could not be resolved', function (t) {
 });
 
 test('request faulty sub package.json', function (t) {
-  var data = box.dispatch({
-    request: '/faulty_require.js'
+  var bundle = box.dispatch({
+    request: ['/faulty_require.js']
   });
 
   var warning = null;
-  data.once('warning', function (err) {
+  bundle.once('warning', function (err) {
     warning = err;
   });
 
-  data.pipe(endpoint(function (err, actual) {
+  bundle.pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
     matchResult(t, 'faulty_package', actual, function () {

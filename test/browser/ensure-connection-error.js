@@ -19,11 +19,11 @@ describe('404 response from request', function () {
   });
 
   it('require.ensure it should return an error', function (done) {
-    notFoundBox.require.ensure('/single.js', function (err) {
+    notFoundBox.require.ensure(['/single.js'], function (err) {
       assert.equal(send, 1);
       assert.deepEqual(acquired, []);
       assert.deepEqual(source, '/');
-      assert.deepEqual(request, '/single.js');
+      assert.deepEqual(request, ['/single.js']);
 
       assert.equal(err.message, 'Got faulty status code 404');
       assert.equal(err.name, 'Error');
@@ -99,11 +99,11 @@ describe('broken response from request', function () {
   });
 
   it('require.ensure it should return an error', function (done) {
-    brokenBox.require.ensure('/single.js', function (err) {
+    brokenBox.require.ensure(['/single.js'], function (err) {
       assert.equal(send, 1);
       assert.deepEqual(acquired, []);
       assert.deepEqual(source, '/');
-      assert.deepEqual(request, '/single.js');
+      assert.deepEqual(request, ['/single.js']);
 
       assert.equal(err.message, 'Could not connect');
       assert.equal(err.name, 'Error');

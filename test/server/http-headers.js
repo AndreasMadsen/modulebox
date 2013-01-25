@@ -24,7 +24,7 @@ fs.utimesSync(
 
 var server = http.createServer(function (req, res) {
   req.pipe( box.dispatch({
-    request: '/single.js',
+    request: ['/single.js'],
     acquired: [],
     source: '/'
   }) ).pipe(res);

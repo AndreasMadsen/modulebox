@@ -22,11 +22,11 @@ describe('module ensure on a working destination', function () {
   });
 
   it('require.ensure returns error if module don\'t exists', function (done) {
-    box.require.ensure('/missing.js', function (err) {
+    box.require.ensure(['/missing.js'], function (err) {
       assert.equal(send, 1);
       assert.deepEqual(acquired, []);
       assert.deepEqual(source, '/');
-      assert.deepEqual(request, '/missing.js');
+      assert.deepEqual(request, ['/missing.js']);
 
       assert.equal(err.message, 'Cannot find module \'/missing.js\'');
       assert.equal(err.name, 'Error');
@@ -37,7 +37,7 @@ describe('module ensure on a working destination', function () {
   });
 
   it('require.ensure don\'t send request twice after failure', function (done) {
-    box.require.ensure('/missing.js', function (err) {
+    box.require.ensure(['/missing.js'], function (err) {
       assert.equal(send, 1);
 
       assert.equal(err.message, 'Cannot find module \'/missing.js\'');
@@ -99,11 +99,11 @@ describe('module ensure on a working destination', function () {
   });
 
   it('require.ensure returns no error if module was found', function (done) {
-    box.require.ensure('/self_export.js', function (err) {
+    box.require.ensure(['/self_export.js'], function (err) {
       assert.equal(send, 2);
       assert.deepEqual(acquired, []);
       assert.deepEqual(source, '/');
-      assert.deepEqual(request, '/self_export.js');
+      assert.deepEqual(request, ['/self_export.js']);
 
       assert.equal(err, null);
 
@@ -112,7 +112,7 @@ describe('module ensure on a working destination', function () {
   });
 
   it('require.ensure don\'t send request twice after sucess', function (done) {
-    box.require.ensure('/self_export.js', function (err) {
+    box.require.ensure(['/self_export.js'], function (err) {
       assert.equal(send, 2);
 
       assert.equal(err, null);

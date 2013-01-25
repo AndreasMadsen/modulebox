@@ -36,7 +36,7 @@ fs.utimesSync(
 
 test('no resources is send makes mtime null and resolved is hash', function (t) {
   var bundle = box.dispatch({
-    request: '/single.js',
+    request: ['/single.js'],
     acquired: ['/single.js']
   });
 
@@ -55,7 +55,9 @@ test('no resources is send makes mtime null and resolved is hash', function (t) 
 });
 
 test('when first resource isn\'t fetched meta is null', function (t) {
-  var bundle = box.dispatch({ request: '/single.js' });
+  var bundle = box.dispatch({
+    request: ['/single.js']
+  });
 
   var meta;
   bundle.once('meta', function (data) {
@@ -72,7 +74,9 @@ test('when first resource isn\'t fetched meta is null', function (t) {
 });
 
 test('when all (one) resources is fetched meta is set', function (t) {
-  var bundle = box.dispatch({ request: '/single.js' });
+  var bundle = box.dispatch({
+    request: ['/single.js']
+  });
 
   var meta;
   bundle.once('meta', function (data) {
@@ -89,7 +93,9 @@ test('when all (one) resources is fetched meta is set', function (t) {
 });
 
 test('when not all resources is fetched meta is null', function (t) {
-  var bundle = box.dispatch({ request: '/pointer.js' });
+  var bundle = box.dispatch({
+    request: ['/pointer.js']
+  });
 
   var meta;
   bundle.once('meta', function (data) {
@@ -106,7 +112,9 @@ test('when not all resources is fetched meta is null', function (t) {
 });
 
 test('when all resources is fetched meta is set', function (t) {
-  var bundle = box.dispatch({ request: '/pointer.js' });
+  var bundle = box.dispatch({
+    request: ['/pointer.js']
+  });
 
   var meta;
   bundle.once('meta', function (data) {
@@ -124,7 +132,7 @@ test('when all resources is fetched meta is set', function (t) {
 
 test('mtime and hash depends on the acquired files', function (t) {
   var bundle = box.dispatch({
-    request: '/pointer.js',
+    request: ['/pointer.js'],
     acquired: ['/single.js']
   });
 
@@ -144,7 +152,7 @@ test('mtime and hash depends on the acquired files', function (t) {
 
 test('loading faulty module for first time should send null meta data', function (t) {
   var bundle = box.dispatch({
-    request: '/faulty_require.js',
+    request: ['/faulty_require.js'],
   });
 
   var meta;
@@ -163,7 +171,7 @@ test('loading faulty module for first time should send null meta data', function
 
 test('when loading faulty module that mtime and hash can be fetched', function (t) {
   var bundle = box.dispatch({
-    request: '/faulty_require.js',
+    request: ['/faulty_require.js'],
   });
 
   var meta;
