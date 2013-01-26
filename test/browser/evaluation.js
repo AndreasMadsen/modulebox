@@ -21,7 +21,6 @@ describe('evaluation', function () {
         var produce = box.require('/throw.js');
         setTimeout(function() {
           var error = produce();
-          console.log(error.stack);
           assert.ok((/throw\.js/).test(error.stack), 'throw.js exists in stack trace');
 
           done(null);
