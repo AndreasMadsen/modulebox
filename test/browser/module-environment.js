@@ -57,9 +57,8 @@ describe('module environment', function () {
 
   it('scroped __filename matches resolved', function () {
     var exports = box.require('/self_export.js');
-    var module = exports.module;
 
-    assert.equal(module.__filename, '/self_export.js');
+    assert.equal(exports.__filename, '/self_export.js');
   });
 
   it('scroped __dirname matches resolved', function () {
