@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules>
-<resolve>/single.js</resolve>
+<resolve>[{"input":"/single.js","filepath":"/single.js"}]</resolve>
 <file path="/single.js"><![CDATA[/* single.js */
 /* end */]]></file>
 <map>{}</map>

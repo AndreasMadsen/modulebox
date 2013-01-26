@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules>
-<resolve>/modules/simple/package.json</resolve>
+<resolve>[{"input":"./package.json","filepath":"/modules/simple/package.json"}]</resolve>
 <file path="/modules/simple/package.json"><![CDATA[{
   "name": "std",
   "main": "index.js"

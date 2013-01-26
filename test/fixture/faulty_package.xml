@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules>
-<resolve>/faulty_require.js</resolve>
+<resolve>[{"input":"/faulty_require.js","filepath":"/faulty_require.js"}]</resolve>
 <file path="/faulty_require.js"><![CDATA[
 require('faulty');
 ]]></file>

@@ -48,7 +48,7 @@ test('no resources is send makes mtime null and resolved is hash', function (t) 
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime, null);
-    t.equal(meta.hash, 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855');
+    t.equal(meta.hash, '9f5ced2fe2b22a76d35e1c7b8400918308ef590e231afe6a9fb2c178a9eabe10');
 
     t.end();
   }));
@@ -86,7 +86,7 @@ test('when all (one) resources is fetched meta is set', function (t) {
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), singleMtime * 1000);
-    t.equal(meta.hash, '9e7c61311c0ad858cd4001679ca48870fbaac7cdfb52abfba4ecc936233e0a05');
+    t.equal(meta.hash, 'a5b3e7daeead13a79cfbcd435fdea1b124f355af87e662f516c8b56662f2e843');
 
     t.end();
   }));
@@ -124,7 +124,7 @@ test('when all resources is fetched meta is set', function (t) {
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), singleMtime * 1000);
-    t.equal(meta.hash, '948888b46487c761c981c1f36087e3e0b5059b2aef1a92d3c0e126df77cdcde5');
+    t.equal(meta.hash, '88e39d9a9ed8fc7d7ba729eece3fb44344ff1b74550a8de2329d6a2de533b821');
 
     t.end();
   }));
@@ -144,7 +144,7 @@ test('mtime and hash depends on the acquired files', function (t) {
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), pointerMtime * 1000);
-    t.equal(meta.hash, 'a8417aa246cf8621c1fa06c6f56f3c743dab5e88d869fd3a8a3ca2858a695722');
+    t.equal(meta.hash, '8afa7f1ad50f911ffc0645e4aec2238dfaa782b50c35e4debccf32e2f1cb8db7');
 
     t.end();
   }));
@@ -182,7 +182,7 @@ test('when loading faulty module that mtime and hash can be fetched', function (
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), faultyMtime * 1000);
-    t.equal(meta.hash, '12d2aff6b1b4e790468a4312a457882a73ba8ad67ab5b8afc864a67bbea03b29');
+    t.equal(meta.hash, '1c389857a1147603288a762c7818d0cc095acf158719b52cfd3f538bc38d39cc');
 
     t.end();
   }));

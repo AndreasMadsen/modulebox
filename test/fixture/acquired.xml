@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules>
-<resolve>/complex.js</resolve>
+<resolve>[{"input":"/complex.js","filepath":"/complex.js"}]</resolve>
 <file path="/complex.js"><![CDATA[/* index.js */
 require('./common.js');
 require('/common.js');
