@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules>
-<resolve>[{"input":"/big.js","filepath":"/big.js"}]</resolve>
+<resolve>{"/big.js":"/big.js"}</resolve>
 <file path="/big.js"><![CDATA[/* big.js */
 // abcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyz
 // abcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyz

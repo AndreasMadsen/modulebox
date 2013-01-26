@@ -68,7 +68,7 @@ server.listen(0, '127.0.0.1', function () {
   });
 
   var expectedMtime = new Date(singleMtime * 1000);
-  var expectedHash = 'a5b3e7daeead13a79cfbcd435fdea1b124f355af87e662f516c8b56662f2e843';
+  var expectedHash = 'aad7e75514192cb62c1b30b586e127c1af73d943f10bbad5e7f15d7db6070f16';
   test('no cache headers on first request', function (t) {
     request(hostname, {}, function (err, res, body) {
       t.equal(err, null);

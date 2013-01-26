@@ -48,7 +48,7 @@ test('no resources is send makes mtime null and resolved is hash', function (t) 
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime, null);
-    t.equal(meta.hash, '9f5ced2fe2b22a76d35e1c7b8400918308ef590e231afe6a9fb2c178a9eabe10');
+    t.equal(meta.hash, 'b17d9e570f00810ad368ab1079687cde7f0a075dc34ed2ceb95420e5a7889577');
 
     t.end();
   }));
@@ -86,7 +86,7 @@ test('when all (one) resources is fetched meta is set', function (t) {
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), singleMtime * 1000);
-    t.equal(meta.hash, 'a5b3e7daeead13a79cfbcd435fdea1b124f355af87e662f516c8b56662f2e843');
+    t.equal(meta.hash, 'aad7e75514192cb62c1b30b586e127c1af73d943f10bbad5e7f15d7db6070f16');
 
     t.end();
   }));
@@ -124,7 +124,7 @@ test('when all resources is fetched meta is set', function (t) {
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), singleMtime * 1000);
-    t.equal(meta.hash, '88e39d9a9ed8fc7d7ba729eece3fb44344ff1b74550a8de2329d6a2de533b821');
+    t.equal(meta.hash, '13a063b63de85deea276945df28fb79921bae67e28383127c2509e8af4507629');
 
     t.end();
   }));
@@ -144,7 +144,7 @@ test('mtime and hash depends on the acquired files', function (t) {
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), pointerMtime * 1000);
-    t.equal(meta.hash, '8afa7f1ad50f911ffc0645e4aec2238dfaa782b50c35e4debccf32e2f1cb8db7');
+    t.equal(meta.hash, '441ffbb7c80fd0c86ddc1020552b11d87e5dfefacac35b1bb752c5c7867d86cc');
 
     t.end();
   }));
@@ -163,7 +163,7 @@ test('mtime and hash depends on all requested files', function (t) {
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), singleMtime * 1000);
-    t.equal(meta.hash, 'd62c4463efeb6d4fee64a2d770e6e022761f393871ff81fa6efb47e224071169');
+    t.equal(meta.hash, '579af1db9dc52014d9f64f4e0496599a89e69c7fa1889de7be86e6332de7c5e3');
 
     t.end();
   }));
@@ -201,7 +201,7 @@ test('when loading faulty module that mtime and hash can be fetched', function (
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), faultyMtime * 1000);
-    t.equal(meta.hash, '1c389857a1147603288a762c7818d0cc095acf158719b52cfd3f538bc38d39cc');
+    t.equal(meta.hash, '8c6639440c9986468f0e214f1040df096fd520a14fc4ef084674bebf1b14c0d7');
 
     t.end();
   }));
