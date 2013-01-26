@@ -3,7 +3,7 @@ var assert = chai.assert;
 
 describe('sync require case', function () {
 
-  var consoleError = console.error;
+  var consoleWarn = console.warn;
 
   it('require fetch resource and compiles content', function () {
     var send = 0;
@@ -25,7 +25,7 @@ describe('sync require case', function () {
     });
 
     var warning = null;
-    console.error = function (err) {
+    console.warn = function (err) {
       warning = err;
     };
 
@@ -36,12 +36,11 @@ describe('sync require case', function () {
     assert.deepEqual(source, '/');
     assert.deepEqual(request, ['/self_export.js']);
 
-    assert.equal(warning.message, 'Warning: /self_export.js was requested synchronously from /');
-    assert.equal(warning.name, 'Error');
+    assert.equal(warning, 'Warning: /self_export.js was requested synchronously from /');
 
     assert.equal(exports.__filename, '/self_export.js');
 
-    console.error = consoleError;
+    console.error = consoleWarn;
   });
 
   it('require fetch resource and throws in case of error', function () {
@@ -61,7 +60,7 @@ describe('sync require case', function () {
     });
 
     var warning = null;
-    console.error = function (err) {
+    console.warn = function (err) {
       warning = err;
     };
 
@@ -77,13 +76,12 @@ describe('sync require case', function () {
     assert.deepEqual(source, '/');
     assert.deepEqual(request, ['/self_export.js']);
 
-    assert.equal(warning.message, 'Warning: /self_export.js was requested synchronously from /');
-    assert.equal(warning.name, 'Error');
+    assert.equal(warning, 'Warning: /self_export.js was requested synchronously from /');
 
     assert.equal(error.message, 'Could not connect');
     assert.equal(error.name, 'Error');
 
-    console.error = consoleError;
+    console.error = consoleWarn;
   });
 
   it('resolve fetch resource', function () {
@@ -106,7 +104,7 @@ describe('sync require case', function () {
     });
 
     var warning = null;
-    console.error = function (err) {
+    console.warn = function (err) {
       warning = err;
     };
 
@@ -117,12 +115,11 @@ describe('sync require case', function () {
     assert.deepEqual(source, '/');
     assert.deepEqual(request, ['/self_export.js']);
 
-    assert.equal(warning.message, 'Warning: /self_export.js was requested synchronously from /');
-    assert.equal(warning.name, 'Error');
+    assert.equal(warning, 'Warning: /self_export.js was requested synchronously from /');
 
     assert.equal(filepath, '/self_export.js');
 
-    console.error = consoleError;
+    console.warn = consoleWarn;
   });
 
 });
