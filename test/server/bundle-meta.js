@@ -150,6 +150,25 @@ test('mtime and hash depends on the acquired files', function (t) {
   }));
 });
 
+test('mtime and hash depends on all requested files', function (t) {
+  var bundle = box.dispatch({
+    request: ['/single.js', '/pointer.js']
+  });
+
+  var meta;
+  bundle.once('meta', function (data) {
+    meta = data;
+  });
+
+  bundle.pipe(endpoint(function (err) {
+    t.equal(err, null);
+    t.equal(meta.mtime.getTime(), singleMtime * 1000);
+    t.equal(meta.hash, 'a598f2fa4b6eaf238ecadd9288001417f858661d62f44a278d216b1e153fd9a0');
+
+    t.end();
+  }));
+});
+
 test('loading faulty module for first time should send null meta data', function (t) {
   var bundle = box.dispatch({
     request: ['/faulty_require.js'],

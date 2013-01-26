@@ -36,6 +36,30 @@ test('simple single module request', function (t) {
   }));
 });
 
+test('double simple module request', function (t) {
+  var bundle = box.dispatch({
+    request: ['/single.js', '/single.js']
+  });
+
+  bundle.pipe(endpoint(function (err, actual) {
+    t.equal(err, null);
+
+    matchResult(t, 'double_single', actual, t.end.bind(t));
+  }));
+});
+
+test('two request diffrent module request', function (t) {
+  var bundle = box.dispatch({
+    request: ['/single.js', '/pointer.js']
+  });
+
+  bundle.pipe(endpoint(function (err, actual) {
+    t.equal(err, null);
+
+    matchResult(t, 'multi_pointer', actual, t.end.bind(t));
+  }));
+});
+
 test('big multi chunk file', function (t) {
   var bundle = box.dispatch({
     request: ['/big.js']
