@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules>
-<resolve>/faulty_require.js</resolve>
+<resolve>{"/faulty_require.js":"/faulty_require.js"}</resolve>
 <file path="/faulty_require.js"><![CDATA[
 require('faulty');
 ]]></file>
-<map>{"/faulty_require.js":{"faulty":{"message":"Unexpected token s","name":"SyntaxError"}}}</map>
+<map>{"/faulty_require.js":{"faulty":{"name":"SyntaxError","message":"Unexpected token s"}}}</map>
 </modules>

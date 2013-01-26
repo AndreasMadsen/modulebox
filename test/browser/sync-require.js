@@ -34,7 +34,7 @@ describe('sync require case', function () {
     assert.equal(send, 1);
     assert.deepEqual(acquired, []);
     assert.deepEqual(source, '/');
-    assert.deepEqual(request, '/self_export.js');
+    assert.deepEqual(request, ['/self_export.js']);
 
     assert.equal(warning.message, 'Warning: /self_export.js was requested synchronously from /');
     assert.equal(warning.name, 'Error');
@@ -75,7 +75,7 @@ describe('sync require case', function () {
     assert.equal(send, 1);
     assert.deepEqual(acquired, []);
     assert.deepEqual(source, '/');
-    assert.deepEqual(request, '/self_export.js');
+    assert.deepEqual(request, ['/self_export.js']);
 
     assert.equal(warning.message, 'Warning: /self_export.js was requested synchronously from /');
     assert.equal(warning.name, 'Error');
@@ -115,7 +115,7 @@ describe('sync require case', function () {
     assert.equal(send, 1);
     assert.deepEqual(acquired, []);
     assert.deepEqual(source, '/');
-    assert.deepEqual(request, '/self_export.js');
+    assert.deepEqual(request, ['/self_export.js']);
 
     assert.equal(warning.message, 'Warning: /self_export.js was requested synchronously from /');
     assert.equal(warning.name, 'Error');

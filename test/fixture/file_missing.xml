@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules>
-<error>{"message":"Cannot find module '/missing.js'","code":"MODULE_NOT_FOUND","name":"Error"}</error>
+<resolve>{"/missing.js":{"name":"Error","message":"Cannot find module '/missing.js'","code":"MODULE_NOT_FOUND"}}</resolve>
 <map>{}</map>
 </modules>

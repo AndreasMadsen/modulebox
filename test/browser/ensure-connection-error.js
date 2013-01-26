@@ -19,11 +19,25 @@ describe('404 response from request', function () {
   });
 
   it('require.ensure it should return an error', function (done) {
-    notFoundBox.require.ensure('/single.js', function (err) {
+    notFoundBox.require.ensure(['/single.js'], function (err) {
       assert.equal(send, 1);
       assert.deepEqual(acquired, []);
       assert.deepEqual(source, '/');
-      assert.deepEqual(request, '/single.js');
+      assert.deepEqual(request, ['/single.js']);
+
+      assert.equal(err.message, 'Got faulty status code 404');
+      assert.equal(err.name, 'Error');
+
+      done(null);
+    });
+  });
+
+  it('require.ensure should not cache a connection error', function (done) {
+    notFoundBox.require.ensure(['/single.js'], function (err) {
+      assert.equal(send, 2);
+      assert.deepEqual(acquired, []);
+      assert.deepEqual(source, '/');
+      assert.deepEqual(request, ['/single.js']);
 
       assert.equal(err.message, 'Got faulty status code 404');
       assert.equal(err.name, 'Error');
@@ -33,55 +47,37 @@ describe('404 response from request', function () {
   });
 
   it('require call should throw error', function () {
-    var errors = [];
+    var err = null;
 
     try {
       notFoundBox.require('/single.js');
-    } catch (err) {
-      errors.push(err);
+    } catch (error) {
+      err = error;
     }
 
-    try {
-      notFoundBox.require('/single.js');
-    } catch (err) {
-      errors.push(err);
-    }
+    assert.equal(send, 3);
 
-    assert.equal(send, 1);
-
-    assert.equal(errors[0].message, 'Got faulty status code 404');
-    assert.equal(errors[0].name, 'Error');
-
-    // The error object is expected to be the same
-    assert.equal(errors[0], errors[1]);
+    assert.equal(err.message, 'Got faulty status code 404');
+    assert.equal(err.name, 'Error');
   });
 
   it('require.resolve call should throw error', function () {
-    var errors = [];
+    var err = null;
 
     try {
       notFoundBox.require.resolve('/single.js');
-    } catch (err) {
-      errors.push(err);
+    } catch (error) {
+      err = error;
     }
 
-    try {
-      notFoundBox.require.resolve('/single.js');
-    } catch (err) {
-      errors.push(err);
-    }
+    assert.equal(send, 4);
 
-    assert.equal(send, 1);
-
-    assert.equal(errors[0].message, 'Got faulty status code 404');
-    assert.equal(errors[0].name, 'Error');
-
-    // The error object is expected to be the same
-    assert.equal(errors[0], errors[1]);
+    assert.equal(err.message, 'Got faulty status code 404');
+    assert.equal(err.name, 'Error');
   });
 });
 
-describe('broken response from request', function () {
+describe('broken connection in request', function () {
   var send = 0;
   var acquired = null;
   var source = null;
@@ -99,11 +95,26 @@ describe('broken response from request', function () {
   });
 
   it('require.ensure it should return an error', function (done) {
-    brokenBox.require.ensure('/single.js', function (err) {
+    brokenBox.require.ensure(['/single.js'], function (err) {
       assert.equal(send, 1);
       assert.deepEqual(acquired, []);
       assert.deepEqual(source, '/');
-      assert.deepEqual(request, '/single.js');
+      assert.deepEqual(request, ['/single.js']);
+
+      assert.equal(err.message, 'Could not connect');
+      assert.equal(err.name, 'Error');
+
+      done(null);
+    });
+  });
+
+
+  it('require.ensure should not cache a connection error', function (done) {
+    brokenBox.require.ensure(['/single.js'], function (err) {
+      assert.equal(send, 2);
+      assert.deepEqual(acquired, []);
+      assert.deepEqual(source, '/');
+      assert.deepEqual(request, ['/single.js']);
 
       assert.equal(err.message, 'Could not connect');
       assert.equal(err.name, 'Error');
@@ -113,50 +124,32 @@ describe('broken response from request', function () {
   });
 
   it('require call should throw error', function () {
-    var errors = [];
+    var err = null;
 
     try {
       brokenBox.require('/single.js');
-    } catch (err) {
-      errors.push(err);
+    } catch (error) {
+      err = error;
     }
 
-    try {
-      brokenBox.require('/single.js');
-    } catch (err) {
-      errors.push(err);
-    }
+    assert.equal(send, 3);
 
-    assert.equal(send, 1);
-
-    assert.equal(errors[0].message, 'Could not connect');
-    assert.equal(errors[0].name, 'Error');
-
-    // The error object is expected to be the same
-    assert.equal(errors[0], errors[1]);
+    assert.equal(err.message, 'Could not connect');
+    assert.equal(err.name, 'Error');
   });
 
   it('require.resolve call should throw error', function () {
-    var errors = [];
+    var err = null;
 
     try {
       brokenBox.require.resolve('/single.js');
-    } catch (err) {
-      errors.push(err);
+    } catch (error) {
+      err = error;
     }
 
-    try {
-      brokenBox.require.resolve('/single.js');
-    } catch (err) {
-      errors.push(err);
-    }
+    assert.equal(send, 4);
 
-    assert.equal(send, 1);
-
-    assert.equal(errors[0].message, 'Could not connect');
-    assert.equal(errors[0].name, 'Error');
-
-    // The error object is expected to be the same
-    assert.equal(errors[0], errors[1]);
+    assert.equal(err.message, 'Could not connect');
+    assert.equal(err.name, 'Error');
   });
 });

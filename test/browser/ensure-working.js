@@ -22,33 +22,45 @@ describe('module ensure on a working destination', function () {
   });
 
   it('require.ensure returns error if module don\'t exists', function (done) {
-    box.require.ensure('/missing.js', function (err) {
+    box.require.ensure(['/missing.js'], function (err) {
       assert.equal(send, 1);
       assert.deepEqual(acquired, []);
       assert.deepEqual(source, '/');
-      assert.deepEqual(request, '/missing.js');
+      assert.deepEqual(request, ['/missing.js']);
 
-      assert.equal(err.message, 'Cannot find module \'/missing.js\'');
-      assert.equal(err.name, 'Error');
-      assert.equal(err.code, 'MODULE_NOT_FOUND');
+      assert.equal(err, null);
+
+      try {
+        box.require('/missing.js');
+      } catch (err) {
+        assert.equal(err.message, 'Cannot find module \'/missing.js\'');
+        assert.equal(err.name, 'Error');
+        assert.equal(err.code, 'MODULE_NOT_FOUND');
+      }
 
       done(null);
     });
   });
 
   it('require.ensure don\'t send request twice after failure', function (done) {
-    box.require.ensure('/missing.js', function (err) {
+    box.require.ensure(['/missing.js'], function (err) {
       assert.equal(send, 1);
 
-      assert.equal(err.message, 'Cannot find module \'/missing.js\'');
-      assert.equal(err.name, 'Error');
-      assert.equal(err.code, 'MODULE_NOT_FOUND');
+      assert.equal(err, null);
+
+      try {
+        box.require('/missing.js');
+      } catch (err) {
+        assert.equal(err.message, 'Cannot find module \'/missing.js\'');
+        assert.equal(err.name, 'Error');
+        assert.equal(err.code, 'MODULE_NOT_FOUND');
+      }
 
       done(null);
     });
   });
 
-  it('require call should throw error', function () {
+  it('require call should throw error same error', function () {
     var errors = [];
 
     try {
@@ -70,7 +82,7 @@ describe('module ensure on a working destination', function () {
     assert.equal(errors[0].code, 'MODULE_NOT_FOUND');
 
     // The error object is expected to be the same
-    assert.equal(errors[0], errors[1]);
+    assert.strictEqual(errors[0], errors[1]);
   });
 
   it('require.resolve call should throw error', function () {
@@ -95,15 +107,16 @@ describe('module ensure on a working destination', function () {
     assert.equal(errors[0].code, 'MODULE_NOT_FOUND');
 
     // The error object is expected to be the same
-    assert.equal(errors[0], errors[1]);
+    assert.strictEqual(errors[0], errors[1]);
   });
 
   it('require.ensure returns no error if module was found', function (done) {
-    box.require.ensure('/self_export.js', function (err) {
+    box.require.ensure(['/self_export.js'], function (err) {
       assert.equal(send, 2);
+
       assert.deepEqual(acquired, []);
       assert.deepEqual(source, '/');
-      assert.deepEqual(request, '/self_export.js');
+      assert.deepEqual(request, ['/self_export.js']);
 
       assert.equal(err, null);
 
@@ -112,7 +125,7 @@ describe('module ensure on a working destination', function () {
   });
 
   it('require.ensure don\'t send request twice after sucess', function (done) {
-    box.require.ensure('/self_export.js', function (err) {
+    box.require.ensure(['/self_export.js'], function (err) {
       assert.equal(send, 2);
 
       assert.equal(err, null);

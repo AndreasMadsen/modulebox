@@ -24,7 +24,7 @@ fs.utimesSync(
 
 var server = http.createServer(function (req, res) {
   req.pipe( box.dispatch({
-    request: '/single.js',
+    request: ['/single.js'],
     acquired: [],
     source: '/'
   }) ).pipe(res);
@@ -68,7 +68,7 @@ server.listen(0, '127.0.0.1', function () {
   });
 
   var expectedMtime = new Date(singleMtime * 1000);
-  var expectedHash = '9e7c61311c0ad858cd4001679ca48870fbaac7cdfb52abfba4ecc936233e0a05';
+  var expectedHash = 'aad7e75514192cb62c1b30b586e127c1af73d943f10bbad5e7f15d7db6070f16';
   test('no cache headers on first request', function (t) {
     request(hostname, {}, function (err, res, body) {
       t.equal(err, null);
