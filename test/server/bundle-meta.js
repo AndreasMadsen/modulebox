@@ -163,7 +163,7 @@ test('mtime and hash depends on all requested files', function (t) {
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), singleMtime * 1000);
-    t.equal(meta.hash, 'a598f2fa4b6eaf238ecadd9288001417f858661d62f44a278d216b1e153fd9a0');
+    t.equal(meta.hash, 'd62c4463efeb6d4fee64a2d770e6e022761f393871ff81fa6efb47e224071169');
 
     t.end();
   }));
