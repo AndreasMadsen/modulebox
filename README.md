@@ -1,10 +1,12 @@
 #modulebox
 
-> `modulebox` creates a node.js like require system. It provides a
-localized module environment, there allow asynchronous and synchronous require
-calls from the client.
+> `modulebox` creates a node.js like require system in the browser. It provides
+a localized secure module environment, there allow pseudo-synchronous require
+calls there don't block, by resolving the dependencies tree on the fly.
 
-**Work In Progress**
+**Work in progress**
+
+**Be aware that this module only works on node version `0.9` and higher.**
 
 ## Installation
 
@@ -12,87 +14,193 @@ calls from the client.
 npm install modulebox
 ```
 
+## Features
+
+* Pseudo-synchronous require calls
+* Customizable `require.resolve` algoritme
+* Source mapping, produces accurate stack traces
+* Blocking `require` fallback, if module source isn't prefetched
+* Automaticly http headers and handles cache control
+* Limits `require.resolve` to a designated directory
+* No pre-analyzing required
+
 ## API documentation
 
 The `modulebox` consists of three parts:
 
-* A module request handler (node.js)
-* A client creating a module environment (browser)
+* A modulebox server (node.js)
+* A client, creating a module environment (browser)
 * The module environment (browser)
 
-### Request handler (node.js)
+### modulebox server
 
-**./server.js** file
+The module exports a `modulebox` constructor.
 
 ```javascript
-var http = require('http');
-var path = require('path');
-var filed = require('filed');
 var modulebox = require('modulebox');
-
-var box = modulebox({
-  root: path.resolve(__dirname, './localized/')
-});
-
-http.createServer(function (req, res) {
-    var href = url.parse(req.url, true);
-
-    if (href.pathname === '/core.js') {
-      req.pipe( filed(box.clientCore) ).pipe(res);
-    } else if (req.pathname === '/module') {
-      req.pipe( box.dispatch(href.query) ).pipe(req);
-    } else {
-      /*
-       * standard request handler, should request the clientCore
-       * and the some initializer.js
-       */
-    }
-}).listen();
 ```
 
-### Module client (browser)
+The constructor takes an settings object, with the following properties:
 
-**./initalizer.js** file
+* `root`<sup>1</sup>: designated localized directory (default: '/'
+* `modules`<sup>1</sup>: directory names of modules (default: 'node_modules')
+* `allowed`<sup>1</sup>: specify basename search pattern
+
+`[1]`: see [localizer](https://github.com/AndreasMadsen/localizer#documentation) for more details.
 
 ```javascript
-(function () {
-  var box = window.modulebox({
-    url: function (acquired, source, request) {
-      return window.location.origin + '/module' +
-        '?acquired=' + acquired +
-        '&source=' + source +
-        '&request' + request;
-    }
-  });
+var box = modulebox({
+  root: path.resolve(__dirname, 'localized')
+});
+```
 
-  // You only need to load modules asynchronously if they are not defined
-  // in a simple `require('string')` format within the `root` directory.
-  // You load them by calling require.ensure (takes an array too). Its
-  // important to note that calling ensure don't compile the module, it is
-  // just insured that it can be required synchronously without blocking
-  // the browserl
-  box.require.ensure('/index.js', function (err) {
-    // We now know that /index.js and all its dependencies are loaded
-    if (err) return alert('request failure: ' + err.message);
+#### box.clientCore
 
-    // Get the module
-    index = require('/index.js');
+Filepath to the uncompressed client javascript file, there will expose the
+modulebox client.
 
-    // Run module.exports function
-    index();
-  });
-})();
+```javascript
+http.createServer(function (req, res) {
+  var href = url.parse(req.url, true);
+
+  if (href.pathname === '/modulebox.js') {
+    req.pipe( filed(box.clientCore) ).pipe(res);
+  }
+});
+```
+
+#### box.dispatch(parameters)
+
+`box.dispatch` is a `ReadStream` constructor there creates a `bundle` of module
+source and `require.resolve` results. The `bundle` can be piped to any
+`WriteStream`. However if piped to a HTTPS stream it it will add HTTP headers,
+according to the `req` stream there must also be piped intro the `bundle`.
+
+The `parameters` object takes the following properties:
+
+* `acquired`: an array of filepaths there contain all the already feteched modules
+* `request`: an array of `require` inputs.
+* `source`: filepath that the modules was requested from.
+
+```javascript
+http.createServer(function (req, res) {
+  var href = url.parse(req.url, true);
+
+  if (req.pathname === '/module') {
+    var bundle = box.dispatch({
+      acquired: JSON.parse(href.query.acquired),
+      request: JSON.parse(href.query.request),
+      source: JSON.parse(href.query.source)
+    });
+
+    req.pipe(bundle).pipe(req);
+  }
+});
+```
+
+### modulebox client (browser)
+
+After the `box.clientCore` script has been loaded by the browser, the
+`window.modulebox` will be available. This method is a `modulebox` constructor
+there after creation exposes a way to fetch and require modules.
+
+The `window.modulebox` constructor takes the following properties:
+
+* `url`: (required) a function there takes three arguments (acquired, source, request)
+  and return a url, there when requested will call `box.dispatch` on the server.
+* `source`: This is a function there takes a filepath as an argument and return
+  a modified filepath. The transformed filepath will the be used in the source mapping.
+  By default this prefixes filepaths with `/modulebox/`.
+
+```javascript
+var box = window.modulebox({
+  url: function (acquired, source, request) {
+    return window.location.origin + '/module' +
+      '?acquired=' + JSON.stringify(acquired) +
+      '&source=' + JSON.stringify(source) +
+      '&request' + JSON.stringify(request);
+  }
+});
+```
+
+#### box.require(module)
+
+This is just like the `require` function in node.js, it returns the
+`module.exports` value.
+
+However unlike the `require` function it is not
+called from a specific module but from the root as defined by the `root`
+property on the server-side.
+
+Also note that if the module wasn't prefetched by `box.require.ensure` it
+will be loaded synchronously, wich will block the javascript execution in thge
+browser. If this is the case you will be warned by a `console.warn` call if
+supported by the browser.
+
+```javascript
+var index = require('/index.js');
+```
+
+#### box.require.ensure(modules, callback)
+
+This method will ensure that all the modules listed in the `modules` array will
+be fetched.
+
+This also includes all the deep dependencies of the `modules` as long as they
+are required in the a simple string form:
+
+```javascript
+require('string');
+```
+
+This means that in the following case `string` won't be prefetched:
+
+```javascript
+var name = 'string';
+require(name);
+```
+
+When done fetching the `callback` will be executed. If an error occurred the
+first argument in the `callback` will become an error.
+
+```javascript
+box.require.ensure(['/index.js'], function (err) {
+  if (err) return console.error(err.message);
+
+  var index = require('/index.js');
+});
+```
+
+It is important to note that resolve errors do not appear in the `error` argument,
+but are throwen when `require` or `require.resolve` is called.
+
+#### box.require.resolve(module)
+
+This returns the filepath relative to the `root` specified on the server-side.
+Note that also this method will synchronous if the module isn't already fetched.
+
+```javascript
+console.log(require.resolve('async') === '/node_modules/async/index.js');
 ```
 
 ### Module environment
 
-**./localized/index.js**
+The module environment is exactly as you known it from node.js, it expose the
+following:
+
+* `__dirname` the directory name (a unix path)
+* `__filename` the filename (a unix path)
+* `module` the module object, contains `exports`
+* `exports` the object there is returned unless `module.exports` is used.
+* `require` returns the `exports` value of another module
+* `require.resolve` returns the filepath of the module.
+* `require.ensure` prefetch modules.
 
 ```javascript
-var another = require('another-module');
+var dialog = require('big-box');
 
 module.exports = function () {
-  alert('Everybody loves alerts!');
+  dialog('Hallo World');
 };
 ```
 
