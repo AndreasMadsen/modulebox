@@ -24,6 +24,18 @@ function matchResult(t, name, actual, callback) {
   });
 }
 
+test('requiring JSON file', function (t) {
+  var bundle = box.dispatch({
+    request: ['/file.json']
+  });
+
+  bundle.pipe(endpoint(function (err, actual) {
+    t.equal(err, null);
+
+    matchResult(t, 'json', actual, t.end.bind(t));
+  }));
+});
+
 test('simple single module request', function (t) {
   var bundle = box.dispatch({
     request: ['/single.js']

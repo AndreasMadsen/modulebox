@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<resolve>{"/file.json":"/file.json"}</resolve>
+<file path="/file.json"><![CDATA[{
+  "name": "file.json"
+}]]></file>
+<map>{}</map>
+</modules>

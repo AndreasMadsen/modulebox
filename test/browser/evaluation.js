@@ -45,4 +45,16 @@ describe('evaluation', function () {
       done(null);
     });
   });
+
+  it('json files are parsed', function (done) {
+    box.require.ensure(['/file.json'], function (err) {
+      assert.equal(err, null);
+
+      assert.deepEqual(box.require('/file.json'), {
+        "name": "file.json"
+      });
+
+      done(null);
+    });
+  });
 });
