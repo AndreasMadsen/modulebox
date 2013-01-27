@@ -11,6 +11,19 @@ describe('evaluation', function () {
     }
   });
 
+  var boxCustom = window.modulebox({
+    url: function (acquired, source, request) {
+      return 'http://localhost:17000/module' +
+        '?acquired=' + JSON.stringify(acquired) +
+        '&source=' + JSON.stringify(source) +
+        '&request=' + JSON.stringify(request);
+    },
+
+    source: function (filepath) {
+      return '/custom' + filepath;
+    }
+  });
+
   var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 
   if (is_chrome) {
@@ -21,7 +34,21 @@ describe('evaluation', function () {
         var produce = box.require('/throw.js');
         setTimeout(function() {
           var error = produce();
-          assert.ok((/throw\.js/).test(error.stack), 'throw.js exists in stack trace');
+          assert.ok((/\/modulebox\/throw\.js/).test(error.stack), 'throw.js exists in stack trace');
+
+          done(null);
+        }, 0);
+      });
+    });
+
+    it('source map filename are customizeable', function (done) {
+      boxCustom.require.ensure(['/throw.js'], function (err) {
+        assert.equal(err, null);
+
+        var produce = boxCustom.require('/throw.js');
+        setTimeout(function() {
+          var error = produce();
+          assert.ok((/\/custom\/throw\.js/).test(error.stack), 'throw.js exists in stack trace');
 
           done(null);
         }, 0);
