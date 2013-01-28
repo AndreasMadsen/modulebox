@@ -24,6 +24,14 @@ npm install modulebox
 * Limits `require.resolve` to a designated directory
 * No pre-analyzing required
 
+## Browser support
+
+* Chrome
+* Firefox
+* Opera
+* Safari
+* Internet Explore 9
+
 ## API documentation
 
 The `modulebox` consists of three parts:
