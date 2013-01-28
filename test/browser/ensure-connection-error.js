@@ -14,7 +14,7 @@ describe('404 response from request', function () {
       request = JSON.parse(JSON.stringify(arg_request));
       source = JSON.parse(JSON.stringify(arg_source));
 
-      return 'http://localhost:17000/wrong';
+      return 'http://' + window.location.host + '/wrong';
     }
   });
 
@@ -90,11 +90,13 @@ describe('broken connection in request', function () {
       request = JSON.parse(JSON.stringify(arg_request));
       source = JSON.parse(JSON.stringify(arg_source));
 
-      return 'http://localhost:10000';
+      return 'http://' + window.location.hostname + ':10000';
     }
   });
 
   it('require.ensure it should return an error', function (done) {
+    this.timeout();
+
     brokenBox.require.ensure(['/single.js'], function (err) {
       assert.equal(send, 1);
       assert.deepEqual(acquired, []);
@@ -110,6 +112,8 @@ describe('broken connection in request', function () {
 
 
   it('require.ensure should not cache a connection error', function (done) {
+    this.timeout();
+
     brokenBox.require.ensure(['/single.js'], function (err) {
       assert.equal(send, 2);
       assert.deepEqual(acquired, []);
@@ -124,6 +128,8 @@ describe('broken connection in request', function () {
   });
 
   it('require call should throw error', function () {
+    this.timeout();
+
     var err = null;
 
     try {
@@ -139,6 +145,8 @@ describe('broken connection in request', function () {
   });
 
   it('require.resolve call should throw error', function () {
+    this.timeout();
+
     var err = null;
 
     try {

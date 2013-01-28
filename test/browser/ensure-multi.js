@@ -14,14 +14,14 @@ describe('multi module ensure on a working destination', function () {
       request = JSON.parse(JSON.stringify(arg_request));
       source = JSON.parse(JSON.stringify(arg_source));
 
-      return 'http://localhost:17000/module' +
-        '?acquired=' + JSON.stringify(acquired) +
-        '&source=' + JSON.stringify(source) +
-        '&request=' + JSON.stringify(request);
+      return 'http://' + window.location.host + '/module' +
+        '?acquired=' + encodeURIComponent(JSON.stringify(acquired)) +
+        '&source=' + encodeURIComponent(JSON.stringify(source)) +
+        '&request=' + encodeURIComponent(JSON.stringify(request));
     }
   });
 
-  it('errors are insolated intro individual requires', function (done) {
+  it('errors are isolated intro individual requires', function (done) {
     box.require.ensure(['/missingA.js', '/missingB.js'], function (err) {
       assert.equal(send, 1);
 

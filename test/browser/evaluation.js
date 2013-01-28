@@ -4,19 +4,19 @@ var assert = chai.assert;
 describe('evaluation', function () {
   var box = window.modulebox({
     url: function (acquired, source, request) {
-      return 'http://localhost:17000/module' +
-        '?acquired=' + JSON.stringify(acquired) +
-        '&source=' + JSON.stringify(source) +
-        '&request=' + JSON.stringify(request);
+      return 'http://' + window.location.host + '/module' +
+        '?acquired=' + encodeURIComponent(JSON.stringify(acquired)) +
+        '&source=' + encodeURIComponent(JSON.stringify(source)) +
+        '&request=' + encodeURIComponent(JSON.stringify(request));
     }
   });
 
   var boxCustom = window.modulebox({
     url: function (acquired, source, request) {
-      return 'http://localhost:17000/module' +
-        '?acquired=' + JSON.stringify(acquired) +
-        '&source=' + JSON.stringify(source) +
-        '&request=' + JSON.stringify(request);
+      return 'http://' + window.location.host + '/module' +
+        '?acquired=' + encodeURIComponent(JSON.stringify(acquired)) +
+        '&source=' + encodeURIComponent(JSON.stringify(source)) +
+        '&request=' + encodeURIComponent(JSON.stringify(request));
     },
 
     source: function (filepath) {

@@ -14,10 +14,10 @@ describe('Isolated modulebox', function () {
       request = JSON.parse(JSON.stringify(arg_request));
       source = JSON.parse(JSON.stringify(arg_source));
 
-      return 'http://localhost:17000/module' +
-        '?acquired=' + JSON.stringify(acquired) +
-        '&source=' + JSON.stringify(source) +
-        '&request=' + JSON.stringify(request);
+      return 'http://' + window.location.host + '/module' +
+        '?acquired=' + encodeURIComponent(JSON.stringify(acquired)) +
+        '&source=' + encodeURIComponent(JSON.stringify(source)) +
+        '&request=' + encodeURIComponent(JSON.stringify(request));
     }
   });
 
