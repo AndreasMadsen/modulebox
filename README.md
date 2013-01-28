@@ -2,9 +2,7 @@
 
 > `modulebox` creates a node.js like require system in the browser. It provides
 a localized secure module environment, there allow pseudo-synchronous require
-calls there don't block, by resolving the dependencies tree on the fly.
-
-**Work in progress**
+calls there don't block by resolving the dependencies tree on the fly.
 
 **Be aware that this module only works on node version `0.9` and higher.**
 
