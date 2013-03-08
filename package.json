@@ -27,7 +27,8 @@
   },
   "devDependencies": {
     "tap": "0.3.x",
-    "blow": "0.7.x"
+    "blow": "0.7.x",
+    "filed": "0.0.x"
   },
   "license": "MIT",
   "engines": {
