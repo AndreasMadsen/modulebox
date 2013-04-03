@@ -83,7 +83,7 @@ http.createServer(function (req, res) {
 
 `box.dispatch` is a `ReadStream` constructor there creates a `bundle` of module
 source and `require.resolve` results. The `bundle` can be piped to any
-`WriteStream`. However if piped to a HTTPS stream it it will add HTTP headers,
+`WriteStream`. However if piped to a HTTP stream it it will add HTTP headers,
 according to the `req` stream there must also be piped intro the `bundle`.
 
 The `parameters` object takes the following properties:
