@@ -195,8 +195,8 @@ console.log(require.resolve('async') === '/node_modules/async/index.js');
 
 ### Module environment
 
-The module environment is exactly as you known it from node.js, it expose the
-following:
+Except for the `require.ensure` the module environment is exactly as you known
+it from node.js. The following is exposed:
 
 * `__dirname` the directory name (a unix path)
 * `__filename` the filename (a unix path)
