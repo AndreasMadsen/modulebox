@@ -143,7 +143,7 @@ called from a specific module but from the root as defined by the `root`
 property on the server-side.
 
 Also note that if the module wasn't prefetched by `box.require.ensure` it
-will be loaded synchronously, wich will block the javascript execution in thge
+will be loaded synchronously, wich will block the javascript execution in the
 browser. If this is the case you will be warned by a `console.warn` call if
 supported by the browser.
 
