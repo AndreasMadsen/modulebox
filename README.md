@@ -8,8 +8,6 @@ calls there don't block by resolving the dependencies tree on the fly.
 by a server which enables you to load modules as they become needed, instead of
 loading the entire website or application at once.
 
-**Be aware that this module do currently only works on node version `0.9` and higher.**
-
 ## Installation
 
 ```sheel
