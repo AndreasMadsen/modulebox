@@ -1,9 +1,9 @@
 {
   "name": "modulebox",
   "description": "node.js like module environment in the browser",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "Andreas Madsen <amwebdk@gmail.com>",
-  "main": "./modulebox.js",
+  "main": "./lib/dispatch.js",
   "scripts": {
     "test": "tap test/server/*",
     "test-browser": "node test/browser-runner/start.js"
