@@ -72,6 +72,18 @@ test('two request diffrent module request', function (t) {
   }));
 });
 
+test('two request diffrent and same module request', function (t) {
+  var bundle = box.dispatch({
+    request: ['/single.js', '/single.js', '/pointer.js']
+  });
+
+  bundle.pipe(endpoint(function (err, actual) {
+    t.equal(err, null);
+
+    matchResult(t, 'same_multi_pointer', actual, t.end.bind(t));
+  }));
+});
+
 test('big multi chunk file', function (t) {
   var bundle = box.dispatch({
     request: ['/big.js']
