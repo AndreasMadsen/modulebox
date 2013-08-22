@@ -200,3 +200,24 @@ test('request faulty sub package.json', function (t) {
     });
   }));
 });
+
+test('request file containing syntax error', function (t) {
+  var bundle = box.dispatch({
+    request: ['/syntax_error.js']
+  });
+
+  var warning = null;
+  bundle.once('warning', function (err) {
+    warning = err;
+  });
+
+  bundle.pipe(endpoint(function (err, actual) {
+    t.equal(err, null);
+
+    matchResult(t, 'syntax_error', actual, function () {
+      t.equal(warning, null);
+
+      t.end();
+    });
+  }));
+});

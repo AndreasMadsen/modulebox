@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<resolve>{"/syntax_error.js":"/syntax_error.js"}</resolve>
+<file path="/syntax_error.js"><![CDATA[/* syntax_error.js */
+module.exports = [, crazy]; #madness
+/* end */]]></file>
+<map>{}</map>
+</modules>
