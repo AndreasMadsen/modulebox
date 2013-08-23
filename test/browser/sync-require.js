@@ -11,7 +11,7 @@ describe('sync require case', function () {
     var source = null;
     var request = null;
     var box = window.modulebox({
-      url: function (arg_acquired, arg_source, arg_request) {
+      url: function (arg_acquired, arg_special, arg_source, arg_request) {
         send += 1;
         acquired = JSON.parse(JSON.stringify(arg_acquired));
         request = JSON.parse(JSON.stringify(arg_request));
@@ -49,7 +49,7 @@ describe('sync require case', function () {
     var source = null;
     var request = null;
     var box = window.modulebox({
-      url: function (arg_acquired, arg_source, arg_request) {
+      url: function (arg_acquired, arg_special, arg_source, arg_request) {
         send += 1;
         acquired = JSON.parse(JSON.stringify(arg_acquired));
         request = JSON.parse(JSON.stringify(arg_request));
@@ -90,7 +90,7 @@ describe('sync require case', function () {
     var source = null;
     var request = null;
     var box = window.modulebox({
-      url: function (arg_acquired, arg_source, arg_request) {
+      url: function (arg_acquired, arg_special, arg_source, arg_request) {
         send += 1;
         acquired = JSON.parse(JSON.stringify(arg_acquired));
         request = JSON.parse(JSON.stringify(arg_request));

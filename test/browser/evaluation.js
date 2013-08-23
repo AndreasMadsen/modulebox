@@ -3,7 +3,7 @@ var assert = chai.assert;
 
 describe('evaluation', function () {
   var box = window.modulebox({
-    url: function (acquired, source, request) {
+    url: function (acquired, special, source, request) {
       return 'http://' + window.location.host + '/module' +
         '?acquired=' + encodeURIComponent(JSON.stringify(acquired)) +
         '&source=' + encodeURIComponent(JSON.stringify(source)) +
@@ -12,7 +12,7 @@ describe('evaluation', function () {
   });
 
   var boxCustom = window.modulebox({
-    url: function (acquired, source, request) {
+    url: function (acquired, special, source, request) {
       return 'http://' + window.location.host + '/module' +
         '?acquired=' + encodeURIComponent(JSON.stringify(acquired)) +
         '&source=' + encodeURIComponent(JSON.stringify(source)) +

@@ -8,7 +8,7 @@ describe('module ensure on a working destination', function () {
   var request = null;
 
   var box = window.modulebox({
-    url: function (arg_acquired, arg_source, arg_request) {
+    url: function (arg_acquired, arg_special, arg_source, arg_request) {
       send += 1;
       acquired = JSON.parse(JSON.stringify(arg_acquired));
       request = JSON.parse(JSON.stringify(arg_request));

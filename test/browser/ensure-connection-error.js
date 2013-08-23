@@ -8,7 +8,7 @@ describe('404 response from request', function () {
   var request = null;
 
   var notFoundBox = window.modulebox({
-    url: function (arg_acquired, arg_source, arg_request) {
+    url: function (arg_acquired, arg_special, arg_source, arg_request) {
       send += 1;
       acquired = JSON.parse(JSON.stringify(arg_acquired));
       request = JSON.parse(JSON.stringify(arg_request));
@@ -84,7 +84,7 @@ describe('broken connection in request', function () {
   var request = null;
 
   var brokenBox = window.modulebox({
-    url: function (arg_acquired, arg_source, arg_request) {
+    url: function (arg_acquired, arg_special, arg_source, arg_request) {
       send += 1;
       acquired = JSON.parse(JSON.stringify(arg_acquired));
       request = JSON.parse(JSON.stringify(arg_request));
