@@ -4,10 +4,10 @@
 <resolve special="true">{"one":"/one.js"}</resolve>
 <file special="true" path="/one.js"><![CDATA[/* special/one.js */
 module.exports = require('two');
-/* end */]]></file-special>
+/* end */]]></file>
 <file special="true" path="/two.js"><![CDATA[/* special/two.js */
 module.exports = 'two';
-/* end */]]></file-special>
+/* end */]]></file>
 <map special="false">{}</map>
 <map special="true">{"/one.js":{"two":"/two.js"}}</map>
 </modules>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<resolve special="false">{"_internal":{"name":"Error","message":"Cannot find module '_internal'","code":"MODULE_NOT_FOUND"}}</resolve>
+<resolve special="true">{}</resolve>
+<map special="false">{}</map>
+<map special="true">{}</map>
+</modules>

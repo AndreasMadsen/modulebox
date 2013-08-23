@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<resolve special="false">{}</resolve>
+<resolve special="true">{"relative":"/relative.js"}</resolve>
+<file special="true" path="/relative.js"><![CDATA[/* special/relative.js */
+module.exports = require('./_internal.js');
+/* end */]]></file>
+<file special="true" path="/_internal.js"><![CDATA[/* special/_internal.js */
+module.exports = 'internal';
+/* end */]]></file>
+<map special="false">{}</map>
+<map special="true">{"/relative.js":{"./_internal.js":"/_internal.js"}}</map>
+</modules>
