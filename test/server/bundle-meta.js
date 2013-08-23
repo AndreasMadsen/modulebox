@@ -34,6 +34,7 @@ fs.utimesSync(
   pointerMtime
 );
 
+/*
 test('no resources is send makes mtime null and resolved is hash', function (t) {
   var bundle = box.dispatch({
     request: ['/single.js'],
@@ -53,6 +54,7 @@ test('no resources is send makes mtime null and resolved is hash', function (t) 
     t.end();
   }));
 });
+*/
 
 test('when first resource isn\'t fetched meta is null', function (t) {
   var bundle = box.dispatch({
