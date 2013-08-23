@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<resolve>{}</resolve>
+<special name="one"><![CDATA[/* special/one.js */
+module.exports = require('two');
+/* end */]]></special>
+<special name="two"><![CDATA[/* special/two.js */
+module.exports = 'two';
+/* end */]]></special>
+<map>{}</map>
+</modules>

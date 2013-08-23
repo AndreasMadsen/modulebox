@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<resolve>{}</resolve>
+<special name="two"><![CDATA[/* special/two.js */
+module.exports = 'two';
+/* end */]]></special>
+<map>{}</map>
+</modules>
