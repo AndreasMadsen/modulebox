@@ -21,6 +21,7 @@
   "dependencies": {
     "async": "0.2.x",
     "endpoint": "0.4.x",
+    "commondir": "0.0.x",
     "localizer": "0.2.x",
     "detective": "2.1.x",
     "startpoint": "0.3.x",
