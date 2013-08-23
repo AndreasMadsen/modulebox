@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules>
-<resolve>{"/single.js":"/single.js"}</resolve>
-<map>{}</map>
+<resolve special="false">{"/single.js":"/single.js"}</resolve>
+<resolve special="true">{}</resolve>
+<map special="false">{}</map>
+<map special="true">{}</map>
 </modules>

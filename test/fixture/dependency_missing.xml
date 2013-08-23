@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules>
-<resolve>{"/missing_require.js":"/missing_require.js"}</resolve>
-<file path="/missing_require.js"><![CDATA[
+<resolve special="false">{"/missing_require.js":"/missing_require.js"}</resolve>
+<resolve special="true">{}</resolve>
+<file special="false" path="/missing_require.js"><![CDATA[
 require('/missing.js');
-]]></file>
-<map>{"/missing_require.js":{"/missing.js":{"name":"Error","message":"Cannot find module '/missing.js'","code":"MODULE_NOT_FOUND"}}}</map>
+]]></file-normal>
+<map special="false">{"/missing_require.js":{"/missing.js":{"name":"Error","message":"Cannot find module '/missing.js'","code":"MODULE_NOT_FOUND"}}}</map>
+<map special="true">{}</map>
 </modules>

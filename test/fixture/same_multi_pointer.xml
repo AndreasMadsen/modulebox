@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules>
-<resolve>{"/pointer.js":"/pointer.js","/single.js":"/single.js"}</resolve>
-<file path="/pointer.js"><![CDATA[/* pointer.js */
+<resolve special="false">{"/pointer.js":"/pointer.js","/single.js":"/single.js"}</resolve>
+<resolve special="true">{}</resolve>
+<file special="false" path="/pointer.js"><![CDATA[/* pointer.js */
 module.exports = require('/single.js');
-/* end */]]></file>
-<file path="/single.js"><![CDATA[/* single.js */
-/* end */]]></file>
-<map>{"/pointer.js":{"/single.js":"/single.js"}}</map>
+/* end */]]></file-normal>
+<file special="false" path="/single.js"><![CDATA[/* single.js */
+/* end */]]></file-normal>
+<map special="false">{"/pointer.js":{"/single.js":"/single.js"}}</map>
+<map special="true">{}</map>
 </modules>

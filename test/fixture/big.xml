@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules>
-<resolve>{"/big.js":"/big.js"}</resolve>
-<file path="/big.js"><![CDATA[/* big.js */
+<resolve special="false">{"/big.js":"/big.js"}</resolve>
+<resolve special="true">{}</resolve>
+<file special="false" path="/big.js"><![CDATA[/* big.js */
 // abcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyz
 // abcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyz
 // abcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyz
@@ -1059,6 +1060,7 @@
 // abcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyz
 // abcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyz
 // abcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyzabcdefghijlknopqurstuvxyz
-/* end */]]></file>
-<map>{}</map>
+/* end */]]></file-normal>
+<map special="false">{}</map>
+<map special="true">{}</map>
 </modules>

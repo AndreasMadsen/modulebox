@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules>
-<resolve>{"./package.json":"/modules/simple/package.json"}</resolve>
-<file path="/modules/simple/package.json"><![CDATA[{
+<resolve special="false">{"./package.json":"/modules/simple/package.json"}</resolve>
+<resolve special="true">{}</resolve>
+<file special="false" path="/modules/simple/package.json"><![CDATA[{
   "name": "std",
   "main": "index.js"
-}]]></file>
-<map>{}</map>
+}]]></file-normal>
+<map special="false">{}</map>
+<map special="true">{}</map>
 </modules>

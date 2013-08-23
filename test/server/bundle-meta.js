@@ -34,7 +34,6 @@ fs.utimesSync(
   pointerMtime
 );
 
-/*
 test('no resources is send makes mtime null and resolved is hash', function (t) {
   var bundle = box.dispatch({
     request: ['/single.js'],
@@ -49,12 +48,11 @@ test('no resources is send makes mtime null and resolved is hash', function (t) 
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime, null);
-    t.equal(meta.hash, 'b17d9e570f00810ad368ab1079687cde7f0a075dc34ed2ceb95420e5a7889577');
+    t.equal(meta.hash, '26609e163aa2f0d03aa444d2af5a550d4b1d114e12743ca799afa7df52ea05ed');
 
     t.end();
   }));
 });
-*/
 
 test('when first resource isn\'t fetched meta is null', function (t) {
   var bundle = box.dispatch({
@@ -88,7 +86,7 @@ test('when all (one) resources is fetched meta is set', function (t) {
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), singleMtime * 1000);
-    t.equal(meta.hash, 'aad7e75514192cb62c1b30b586e127c1af73d943f10bbad5e7f15d7db6070f16');
+    t.equal(meta.hash, '42ae6b4b1bb78879cad97ee0092acc77ba788e8b2e1577240b012e76d15c8377');
 
     t.end();
   }));
@@ -126,7 +124,7 @@ test('when all resources is fetched meta is set', function (t) {
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), singleMtime * 1000);
-    t.equal(meta.hash, '13a063b63de85deea276945df28fb79921bae67e28383127c2509e8af4507629');
+    t.equal(meta.hash, '76d89e851dd53b85399857a056a9b1b6852753df88906c589e55d212de5ac6ac');
 
     t.end();
   }));
@@ -146,7 +144,7 @@ test('mtime and hash depends on the acquired files', function (t) {
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), pointerMtime * 1000);
-    t.equal(meta.hash, '441ffbb7c80fd0c86ddc1020552b11d87e5dfefacac35b1bb752c5c7867d86cc');
+    t.equal(meta.hash, '40c869dd3723b08beb0d01bf76ef7932adc3e5881d9f4d8ccd2633ebe93d4327');
 
     t.end();
   }));
@@ -165,7 +163,7 @@ test('mtime and hash depends on all requested files', function (t) {
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), singleMtime * 1000);
-    t.equal(meta.hash, '579af1db9dc52014d9f64f4e0496599a89e69c7fa1889de7be86e6332de7c5e3');
+    t.equal(meta.hash, '717c04125e3e3651cdaa2a37d17173eaf3f3d6541ab1c3974d2c687a7150501f');
 
     t.end();
   }));
@@ -203,7 +201,7 @@ test('when loading faulty module that mtime and hash can be fetched', function (
   bundle.pipe(endpoint(function (err) {
     t.equal(err, null);
     t.equal(meta.mtime.getTime(), faultyMtime * 1000);
-    t.equal(meta.hash, '8c6639440c9986468f0e214f1040df096fd520a14fc4ef084674bebf1b14c0d7');
+    t.equal(meta.hash, '476e7ee446e4d93516b5dc96ed7681412ba056bf387695c7aa76fa812c8fd838');
 
     t.end();
   }));

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules>
-<resolve>{"/complex.js":"/complex.js"}</resolve>
-<file path="/complex.js"><![CDATA[/* index.js */
+<resolve special="false">{"/complex.js":"/complex.js"}</resolve>
+<resolve special="true">{}</resolve>
+<file special="false" path="/complex.js"><![CDATA[/* index.js */
 require('./common.js');
 require('/common.js');
 require('./common_require.js');
@@ -9,8 +10,8 @@ require('/common_require.js');
 
 exports.common = require('./common');
 exports.simple = require('simple');
-/* end */]]></file>
-<file path="/common.js"><![CDATA[/* common.js */
+/* end */]]></file-normal>
+<file special="false" path="/common.js"><![CDATA[/* common.js */
 if (typeof global.commonLoaded === 'undefined') {
   global.commonLoaded = 0;
 }
@@ -18,16 +19,17 @@ if (typeof global.commonLoaded === 'undefined') {
 global.commonLoaded += 1;
 
 module.exports = global.commonLoaded;
-/* end */]]></file>
-<file path="/common_require.js"><![CDATA[/* common_require.js */
+/* end */]]></file-normal>
+<file special="false" path="/common_require.js"><![CDATA[/* common_require.js */
 require('./common');
-/* end */]]></file>
-<file path="/modules/simple/index.js"><![CDATA[/* modules/simple/index.js */
+/* end */]]></file-normal>
+<file special="false" path="/modules/simple/index.js"><![CDATA[/* modules/simple/index.js */
 module.exports = require('./package.json');
-/* end */]]></file>
-<file path="/modules/simple/package.json"><![CDATA[{
+/* end */]]></file-normal>
+<file special="false" path="/modules/simple/package.json"><![CDATA[{
   "name": "std",
   "main": "index.js"
-}]]></file>
-<map>{"/complex.js":{"./common":"/common.js","./common.js":"/common.js","./common_require.js":"/common_require.js","/common.js":"/common.js","/common_require.js":"/common_require.js","simple":"/modules/simple/index.js"},"/common_require.js":{"./common":"/common.js"},"/modules/simple/index.js":{"./package.json":"/modules/simple/package.json"}}</map>
+}]]></file-normal>
+<map special="false">{"/complex.js":{"./common":"/common.js","./common.js":"/common.js","./common_require.js":"/common_require.js","/common.js":"/common.js","/common_require.js":"/common_require.js","simple":"/modules/simple/index.js"},"/common_require.js":{"./common":"/common.js"},"/modules/simple/index.js":{"./package.json":"/modules/simple/package.json"}}</map>
+<map special="true">{}</map>
 </modules>

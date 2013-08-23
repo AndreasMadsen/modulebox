@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules>
-<resolve>{"/single.js":"/single.js"}</resolve>
-<file path="/single.js"><![CDATA[/* single.js */
-/* end */]]></file>
-<map>{}</map>
+<resolve special="false">{"/single.js":"/single.js"}</resolve>
+<resolve special="true">{}</resolve>
+<file special="false" path="/single.js"><![CDATA[/* single.js */
+/* end */]]></file-normal>
+<map special="false">{}</map>
+<map special="true">{}</map>
 </modules>

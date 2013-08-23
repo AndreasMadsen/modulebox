@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <modules>
-<resolve>{}</resolve>
-<special name="json"><![CDATA[{
+<resolve special="false">{}</resolve>
+<resolve special="true">{"json":"/json.json"}</resolve>
+<file special="true" path="/json.json"><![CDATA[{
   "simple": "json file"
-}]]></special>
-<map>{}</map>
+}]]></file-special>
+<map special="false">{}</map>
+<map special="true">{}</map>
 </modules>
