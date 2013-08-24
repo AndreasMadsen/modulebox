@@ -38,7 +38,8 @@ var box = modulebox({
     json: path.resolve(__dirname, '..', 'special', 'json.json'),
     relative: path.resolve(__dirname, '..', 'special', 'relative.js'),
     missing: path.resolve(__dirname, '..', 'special', 'missing.js'),
-    'throw': path.resolve(__dirname, '..', 'special', 'throw.js')
+    'throw': path.resolve(__dirname, '..', 'special', 'throw.js'),
+    self: path.resolve(__dirname, '..', 'special', 'self.js')
   }
 });
 

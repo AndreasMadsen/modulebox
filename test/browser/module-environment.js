@@ -126,4 +126,18 @@ describe('module environment', function () {
     });
   });
 
+  it('special throws when doing later require', function (done) {
+    box.require.ensure(['self'], function (err) {
+      assert.equal(err, null);
+
+      var module = box.require('self');
+      try {
+        module.require.ensure('something', function () {});
+      } catch (e) {
+        assert.equal(e.message, 'special modules can not make remove requests');
+        done(null);
+      }
+    });
+  });
+
 });
