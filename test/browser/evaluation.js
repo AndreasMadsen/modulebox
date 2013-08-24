@@ -6,6 +6,7 @@ describe('evaluation', function () {
     url: function (acquired, special, source, request) {
       return 'http://' + window.location.host + '/module' +
         '?acquired=' + encodeURIComponent(JSON.stringify(acquired)) +
+        '&special=' + encodeURIComponent(JSON.stringify(special)) +
         '&source=' + encodeURIComponent(JSON.stringify(source)) +
         '&request=' + encodeURIComponent(JSON.stringify(request));
     }
@@ -15,6 +16,7 @@ describe('evaluation', function () {
     url: function (acquired, special, source, request) {
       return 'http://' + window.location.host + '/module' +
         '?acquired=' + encodeURIComponent(JSON.stringify(acquired)) +
+        '&special=' + encodeURIComponent(JSON.stringify(special)) +
         '&source=' + encodeURIComponent(JSON.stringify(source)) +
         '&request=' + encodeURIComponent(JSON.stringify(request));
     },
@@ -35,6 +37,20 @@ describe('evaluation', function () {
         setTimeout(function() {
           var error = produce();
           assert.ok((/\/modulebox\/throw\.js/).test(error.stack), 'throw.js exists in stack trace');
+
+          done(null);
+        }, 0);
+      });
+    });
+
+    it('source map creates a meaningful stack trace for specials', function (done) {
+      box.require.ensure(['throw'], function (err) {
+        assert.equal(err, null);
+
+        var produce = box.require('throw');
+        setTimeout(function() {
+          var error = produce();
+          assert.ok((/\/modulebox\/__special__\/throw\.js/).test(error.stack), 'throw.js exists in stack trace');
 
           done(null);
         }, 0);
@@ -79,6 +95,18 @@ describe('evaluation', function () {
 
       assert.deepEqual(box.require('/file.json'), {
         "name": "file.json"
+      });
+
+      done(null);
+    });
+  });
+
+  it('json files are parsed on special', function (done) {
+    box.require.ensure(['json'], function (err) {
+      assert.equal(err, null);
+
+      assert.deepEqual(box.require('json'), {
+        "simple": "json file"
       });
 
       done(null);

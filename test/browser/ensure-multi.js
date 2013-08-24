@@ -4,6 +4,7 @@ var assert = chai.assert;
 describe('multi module ensure on a working destination', function () {
   var send = 0;
   var acquired = null;
+  var special = null;
   var source = null;
   var request = null;
 
@@ -11,23 +12,26 @@ describe('multi module ensure on a working destination', function () {
     url: function (arg_acquired, arg_special, arg_source, arg_request) {
       send += 1;
       acquired = JSON.parse(JSON.stringify(arg_acquired));
+      special = JSON.parse(JSON.stringify(arg_special));
       request = JSON.parse(JSON.stringify(arg_request));
       source = JSON.parse(JSON.stringify(arg_source));
 
       return 'http://' + window.location.host + '/module' +
         '?acquired=' + encodeURIComponent(JSON.stringify(acquired)) +
+        '&special=' + encodeURIComponent(JSON.stringify(special)) +
         '&source=' + encodeURIComponent(JSON.stringify(source)) +
         '&request=' + encodeURIComponent(JSON.stringify(request));
     }
   });
 
   it('errors are isolated intro individual requires', function (done) {
-    box.require.ensure(['/missingA.js', '/missingB.js'], function (err) {
+    box.require.ensure(['/missingA.js', '/missingB.js', 'missing'], function (err) {
       assert.equal(send, 1);
 
       assert.deepEqual(acquired, []);
+      assert.deepEqual(special, []);
       assert.deepEqual(source, '/');
-      assert.deepEqual(request, ['/missingA.js', '/missingB.js']);
+      assert.deepEqual(request, ['/missingA.js', '/missingB.js', 'missing']);
 
       assert.equal(err, null);
 
@@ -47,6 +51,14 @@ describe('multi module ensure on a working destination', function () {
         assert.equal(err.code, 'MODULE_NOT_FOUND');
       }
 
+      try {
+        box.require('missing');
+      } catch (err) {
+        assert.equal(err.message, 'Cannot find module \'missing\'');
+        assert.equal(err.name, 'Error');
+        assert.equal(err.code, 'MODULE_NOT_FOUND');
+      }
+
       done(null);
     });
   });
@@ -56,6 +68,7 @@ describe('multi module ensure on a working destination', function () {
       assert.equal(send, 2);
 
       assert.deepEqual(acquired, []);
+      assert.deepEqual(special, []);
       assert.deepEqual(source, '/');
       assert.deepEqual(request, ['/missing.js', '/self_export.js']);
 
@@ -77,7 +90,7 @@ describe('multi module ensure on a working destination', function () {
   });
 
   it('If everything is already fetched do not send request', function (done) {
-    box.require.ensure(['/missing.js', '/self_export.js'], function (err) {
+    box.require.ensure(['/missing.js', 'missing', '/self_export.js'], function (err) {
       assert.equal(send, 2);
       assert.equal(err, null);
 
@@ -90,6 +103,7 @@ describe('multi module ensure on a working destination', function () {
       assert.equal(send, 3);
 
       assert.deepEqual(acquired, ['/self_export.js']);
+      assert.deepEqual(special, []);
       assert.deepEqual(source, '/');
       assert.deepEqual(request, ['/single.js']);
 

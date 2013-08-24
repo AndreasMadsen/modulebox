@@ -31,7 +31,15 @@ var blowDispatch = blow(files, {
 var box = modulebox({
   root: path.resolve(__dirname, '..', 'localized'),
 
-  modules: 'modules'
+  modules: 'modules',
+  special: {
+    one: path.resolve(__dirname, '..', 'special', 'one.js'),
+    two: path.resolve(__dirname, '..', 'special', 'two.js'),
+    json: path.resolve(__dirname, '..', 'special', 'json.json'),
+    relative: path.resolve(__dirname, '..', 'special', 'relative.js'),
+    missing: path.resolve(__dirname, '..', 'special', 'missing.js'),
+    'throw': path.resolve(__dirname, '..', 'special', 'throw.js')
+  }
 });
 
 http.createServer(function (req, res) {

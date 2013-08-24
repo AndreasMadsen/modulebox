@@ -4,6 +4,7 @@ var assert = chai.assert;
 describe('module environment', function () {
   var send = 0;
   var acquired = null;
+  var special = null;
   var source = null;
   var request = null;
 
@@ -11,11 +12,13 @@ describe('module environment', function () {
     url: function (arg_acquired, arg_special, arg_source, arg_request) {
       send += 1;
       acquired = JSON.parse(JSON.stringify(arg_acquired));
+      special = JSON.parse(JSON.stringify(arg_special));
       request = JSON.parse(JSON.stringify(arg_request));
       source = JSON.parse(JSON.stringify(arg_source));
 
       return 'http://' + window.location.host + '/module' +
         '?acquired=' + encodeURIComponent(JSON.stringify(acquired)) +
+        '&special=' + encodeURIComponent(JSON.stringify(special)) +
         '&source=' + encodeURIComponent(JSON.stringify(source)) +
         '&request=' + encodeURIComponent(JSON.stringify(request));
     }
@@ -25,6 +28,7 @@ describe('module environment', function () {
     box.require.ensure(['/self_export.js'], function (err) {
       assert.equal(send, 1);
       assert.deepEqual(acquired, []);
+      assert.deepEqual(special, []);
       assert.deepEqual(source, '/');
       assert.deepEqual(request, ['/self_export.js']);
 
@@ -88,7 +92,6 @@ describe('module environment', function () {
     assert.equal(exports, exports.require('/self_export.js'));
   });
 
-
   it('undefined can\'t be affected', function () {
     var exports = box.require('/self_export.js');
 
@@ -101,6 +104,26 @@ describe('module environment', function () {
     var exports = box.require('/self_export.js');
 
     assert.equal(exports.require.resolve('/self_export.js'), '/self_export.js');
+  });
+
+  it('relative requires work within special', function (done) {
+    box.require.ensure(['relative'], function (err) {
+      assert.equal(err, null);
+
+      var exports = box.require('relative');
+      assert.equal(exports, 'internal');
+      done(null);
+    });
+  });
+
+  it('special requires work within special', function (done) {
+    box.require.ensure(['one'], function (err) {
+      assert.equal(err, null);
+
+      var exports = box.require('one');
+      assert.equal(exports, 'two');
+      done(null);
+    });
   });
 
 });
