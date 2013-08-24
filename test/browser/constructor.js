@@ -7,22 +7,19 @@ describe('window.modulebox client constructor', function () {
     assert.equal(typeof window.modulebox, 'function');
   });
 
-  it('should throw if no settings was defined', function () {
-    try {
-      var box = window.modulebox();
-    } catch (err) {
-       assert.equal(err.message, 'The settings object must be specified');
-       assert.equal(err.name, 'TypeError');
-    }
+  it('should default baseUrl and sourcePath', function () {
+    var box = window.modulebox();
+    assert.equal(box._baseUrl, 'http://' + window.location.host + '/modulebox/');
+    assert.equal(box._sourcePath, '/modulebox/files/');
   });
 
-  it('should throw if no url encoder was defined', function () {
-    try {
-      window.modulebox({});
-    } catch (err) {
-       assert.equal(err.message, 'A url method must be provided');
-       assert.equal(err.name, 'TypeError');
-    }
+  it('should define baseUrl and sourcePath if set', function () {
+    var box = window.modulebox({
+      baseUrl: 'http://' + window.location.host + '/custom/',
+      sourcePath: '/custom/module/'
+    });
+    assert.equal(box._baseUrl, 'http://' + window.location.host + '/custom/');
+    assert.equal(box._sourcePath, '/custom/module/');
   });
 
 });

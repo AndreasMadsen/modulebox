@@ -2,28 +2,10 @@
 var assert = chai.assert;
 
 describe('evaluation', function () {
-  var box = window.modulebox({
-    url: function (acquired, special, source, request) {
-      return 'http://' + window.location.host + '/module' +
-        '?acquired=' + encodeURIComponent(JSON.stringify(acquired)) +
-        '&special=' + encodeURIComponent(JSON.stringify(special)) +
-        '&source=' + encodeURIComponent(JSON.stringify(source)) +
-        '&request=' + encodeURIComponent(JSON.stringify(request));
-    }
-  });
+  var box = window.modulebox();
 
   var boxCustom = window.modulebox({
-    url: function (acquired, special, source, request) {
-      return 'http://' + window.location.host + '/module' +
-        '?acquired=' + encodeURIComponent(JSON.stringify(acquired)) +
-        '&special=' + encodeURIComponent(JSON.stringify(special)) +
-        '&source=' + encodeURIComponent(JSON.stringify(source)) +
-        '&request=' + encodeURIComponent(JSON.stringify(request));
-    },
-
-    source: function (filepath) {
-      return '/custom' + filepath;
-    }
+    sourcePath: '/custom/module/'
   });
 
   var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
@@ -36,7 +18,7 @@ describe('evaluation', function () {
         var produce = box.require('/throw.js');
         setTimeout(function() {
           var error = produce();
-          assert.ok((/\/modulebox\/throw\.js/).test(error.stack), 'throw.js exists in stack trace');
+          assert.ok((/\/modulebox\/files\/throw\.js/).test(error.stack), 'throw.js exists in stack trace');
 
           done(null);
         }, 0);
@@ -50,7 +32,7 @@ describe('evaluation', function () {
         var produce = box.require('throw');
         setTimeout(function() {
           var error = produce();
-          assert.ok((/\/modulebox\/__special__\/throw\.js/).test(error.stack), 'throw.js exists in stack trace');
+          assert.ok((/\/modulebox\/files\/_special_\/throw\.js/).test(error.stack), 'throw.js exists in stack trace');
 
           done(null);
         }, 0);
@@ -64,7 +46,7 @@ describe('evaluation', function () {
         var produce = boxCustom.require('/throw.js');
         setTimeout(function() {
           var error = produce();
-          assert.ok((/\/custom\/throw\.js/).test(error.stack), 'throw.js exists in stack trace');
+          assert.ok((/\/custom\/module\/throw\.js/).test(error.stack), 'throw.js exists in stack trace');
 
           done(null);
         }, 0);

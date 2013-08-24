@@ -1,10 +1,8 @@
 
 var fs = require('fs');
-var url = require('url');
 var path = require('path');
 var blow = require('blow');
 var http = require('http');
-var filed = require('filed');
 var modulebox = require('../../lib/dispatch.js');
 
 //
@@ -44,21 +42,9 @@ var box = modulebox({
 });
 
 http.createServer(function (req, res) {
-    var href = url.parse(req.url, true);
-
-    if (href.pathname === '/core.js') {
-      req.pipe( filed(box.clientCore) ).pipe(res);
-    }
-
-    else if (href.pathname === '/module') {
-      req.pipe(box.dispatch({
-        acquired: JSON.parse(href.query.acquired),
-        source: JSON.parse(href.query.source),
-        request: JSON.parse(href.query.request)
-      })).pipe(res);
-    }
-
-    else {
+    if (req.url.slice(0, 11) === '/modulebox/') {
+      box.dispatch(req, res);
+    } else {
       blowDispatch(req, res);
     }
 }).listen(11000, '0.0.0.0', function () {

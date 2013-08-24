@@ -3,33 +3,26 @@ var assert = chai.assert;
 
 describe('module environment', function () {
   var send = 0;
-  var acquired = null;
+  var normal = null;
   var special = null;
-  var source = null;
+  var from = null;
   var request = null;
 
-  var box = window.modulebox({
-    url: function (arg_acquired, arg_special, arg_source, arg_request) {
-      send += 1;
-      acquired = JSON.parse(JSON.stringify(arg_acquired));
-      special = JSON.parse(JSON.stringify(arg_special));
-      request = JSON.parse(JSON.stringify(arg_request));
-      source = JSON.parse(JSON.stringify(arg_source));
-
-      return 'http://' + window.location.host + '/module' +
-        '?acquired=' + encodeURIComponent(JSON.stringify(acquired)) +
-        '&special=' + encodeURIComponent(JSON.stringify(special)) +
-        '&source=' + encodeURIComponent(JSON.stringify(source)) +
-        '&request=' + encodeURIComponent(JSON.stringify(request));
-    }
-  });
+  var box = window.modulebox();
+  box._requestNotify = function (arg_normal, arg_special, arg_from, arg_request) {
+    send += 1;
+    normal = JSON.parse(JSON.stringify(arg_normal));
+    special = JSON.parse(JSON.stringify(arg_special));
+    from = JSON.parse(JSON.stringify(arg_from));
+    request = JSON.parse(JSON.stringify(arg_request));
+  };
 
   it('require.ensure returns no error if module was found', function (done) {
     box.require.ensure(['/self_export.js'], function (err) {
       assert.equal(send, 1);
-      assert.deepEqual(acquired, []);
+      assert.deepEqual(normal, []);
       assert.deepEqual(special, []);
-      assert.deepEqual(source, '/');
+      assert.deepEqual(from, '/');
       assert.deepEqual(request, ['/self_export.js']);
 
       assert.equal(err, null);
@@ -76,8 +69,8 @@ describe('module environment', function () {
 
     exports.require.ensure(['/self_export.js'], function (err) {
       assert.equal(send, 2);
-      assert.deepEqual(acquired, ['/self_export.js']);
-      assert.deepEqual(source, '/self_export.js');
+      assert.deepEqual(normal, ['/self_export.js']);
+      assert.deepEqual(from, '/self_export.js');
       assert.deepEqual(request, ['/self_export.js']);
 
       assert.equal(err, null);
