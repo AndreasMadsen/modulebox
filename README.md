@@ -32,6 +32,69 @@ npm install modulebox
 * Safari
 * Internet Explore 9
 
+## Example
+
+**server.js**
+
+```javascript
+var http = require('http');
+var modulebox = require('modulebox');
+
+// You should have a directory where all your client modules are, in this case
+//  it is `__dirname + '/secure'`. This directory will serve as a fake root
+//  from which filepaths are calculate.
+var box = modulebox({
+  root: __dirname + '/secure'
+});
+
+// Next you create a simple server
+var server = http.createServer(function (req, res) {
+  // Usually you would have a router where you check for /modulebox/
+  if (req.url.slice(0, 11) === '/modulebox/') {
+    box.dispatch(req, res);
+  } else {
+    // Do your usual stuff, such as serving `index.html?
+  }
+});
+```
+
+**index.html**
+
+```html
+<html>
+  <!-- this script sets window.modulebox -->
+  <script src="/modulebox/core.js"></script>
+  <script>(function () {
+    // you should then create a box object
+    var box = window.modulebox();
+
+    // `box` provides you with `require`, `require.resolve` and `requre.ensure`
+    //  the last is important since it loads modules asynchronously
+    box.require.ensure(['/module_1.js', '/module_2.js'], function (err) {
+      if (err) throw err;
+
+      // Now that the `module_1.js` and `module_1.js` and all their dependencies
+      //  are loaded you can use `box.require` without doing a synchronously XHR.
+      box.require('/module_1.js');
+      box.require('/module_2.js');
+    });
+  })();</script>
+</html>
+```
+
+**__dirname + '/secure/module_1.js'**
+
+```javascript
+// within your modules `require`, `module`, `exports`, __dirname, __filename
+//  are defined and `require` calles will already be loaded.
+var realmodule = require('realmodule');
+
+// You can also loadd modules asynchronously with `require.ensure`
+require.ensure(['anothermodule'], function (err) {
+  if (err) throw err;
+});
+```
+
 ## API documentation
 
 The `modulebox` consists of three parts:
@@ -50,84 +113,51 @@ var modulebox = require('modulebox');
 
 The constructor takes an settings object, with the following properties:
 
-* `root`<sup>1</sup>: designated localized directory (default: '/'
-* `modules`<sup>1</sup>: directory names of modules (default: 'node_modules')
-* `allowed`<sup>1</sup>: specify basename search pattern
+* `root`: designated secure directory (default: '/')
+* `modules`: directory name of modules (default: 'node_modules')
+* `allowed`: specify basename search pattern
+* `special`: an object mapping module names to files, only required if you want core modules
 
-`[1]`: see [localizer](https://github.com/AndreasMadsen/localizer#documentation) for more details.
+See [localizer](https://github.com/AndreasMadsen/localizer#documentation) for more details
+on `root`, `modules` and `allowed`.
 
 ```javascript
+var builtins = require('browser-builtins');
 var box = modulebox({
-  root: path.resolve(__dirname, 'localized')
+  root: path.resolve(__dirname, 'secure'),
+  special: builtins
 });
 ```
 
-#### box.clientCore
+#### box.dispatch(req, res)
 
-Filepath to the uncompressed client javascript file, there will expose the
-modulebox client.
-
-```javascript
-http.createServer(function (req, res) {
-  var href = url.parse(req.url, true);
-
-  if (href.pathname === '/modulebox.js') {
-    req.pipe( filed(box.clientCore) ).pipe(res);
-  }
-});
-```
-
-#### box.dispatch(parameters)
-
-`box.dispatch` is a `ReadStream` constructor there creates a `bundle` of module
-source and `require.resolve` results. The `bundle` can be piped to any
-`WriteStream`. However if piped to a HTTP stream it it will add HTTP headers,
-according to the `req` stream there must also be piped intro the `bundle`.
-
-The `parameters` object takes the following properties:
-
-* `acquired`: an array of filepaths there contain all the already feteched modules
-* `request`: an array of `require` inputs.
-* `source`: filepath that the modules was requested from.
+`box.dispatch` is a method there will read the query parameters of `req.url`
+defined by the client and send the requested module or send the `core.js` file.
+It will also take care of cache control headers such as `etag` and `last-modified`.
 
 ```javascript
 http.createServer(function (req, res) {
-  var href = url.parse(req.url, true);
-
-  if (req.pathname === '/module') {
-    var bundle = box.dispatch({
-      acquired: JSON.parse(href.query.acquired),
-      request: JSON.parse(href.query.request),
-      source: JSON.parse(href.query.source)
-    });
-
-    req.pipe(bundle).pipe(req);
+  if (req.url.slice(0, 11) === '/modulebox/') {
+    box.dispatch(req, res);
   }
 });
 ```
 
 ### modulebox client (browser)
 
-After the `box.clientCore` script has been loaded by the browser, the
-`window.modulebox` will be available. This method is a `modulebox` constructor
-there after creation exposes a way to fetch and require modules.
+After the `core.js` script has been loaded by the browser, the `window.modulebox`
+will be available. This method is a `modulebox` constructor there after initializing
+exposes a way to fetch and require modules.
 
 The `window.modulebox` constructor takes the following properties:
 
-* `url`: (required) a function there takes three arguments (acquired, source, request)
-  and return a url, there when requested will call `box.dispatch` on the server.
-* `source`: This is a function there takes a filepath as an argument and return
-  a modified filepath. The transformed filepath will the be used in the source mapping.
-  By default this prefixes filepaths with `/modulebox/`.
+* `baseUrl`: the url to send module requests (default: 'http(s)://{host}/modulebox/')
+* `sourcePath`: the pathname modules will be in the source map (default '/modulebox/files/');
 
 ```javascript
 var box = window.modulebox({
-  url: function (acquired, source, request) {
-    return window.location.origin + '/module' +
-      '?acquired=' + JSON.stringify(acquired) +
-      '&source=' + JSON.stringify(source) +
-      '&request' + JSON.stringify(request);
-  }
+  baseUrl: window.location.protocol + '//' + window.location.host + '/base/',
+  sourcePath: '/modules/'
 });
 ```
 
@@ -136,14 +166,13 @@ var box = window.modulebox({
 This is just like the `require` function in node.js, it returns the
 `module.exports` value.
 
-However unlike the `require` function it is not
-called from a specific module but from the root as defined by the `root`
-property on the server-side.
+However unlike the `require` function it is not called from a specific module
+but from the root as defined by the `root` property on the server-side.
 
-Also note that if the module wasn't prefetched by `box.require.ensure` it
-will be loaded synchronously, wich will block the javascript execution in the
-browser. If this is the case you will be warned by a `console.warn` call if
-supported by the browser.
+Also note that if the module wasn't prefetched with `box.require.ensure` it
+will be loaded synchronously, which will block the javascript execution in the
+browser. If this is the case you will be warned by a `console.warn` call (if
+supported by the browser).
 
 ```javascript
 var index = require('/index.js');
@@ -151,25 +180,20 @@ var index = require('/index.js');
 
 #### box.require.ensure(modules, callback)
 
-This method will ensure that all the modules listed in the `modules` array will
-be fetched.
+This method will ensure that all the modules listed in the `modules` array and
+their dependencies will be fetched.
 
-This also includes all the deep dependencies of the `modules` as long as they
-are required in the a simple string form:
+It is worth noteing that dependencies must be defined reasonably clearly, like:
 
 ```javascript
 require('string');
 ```
 
-This means that in the following case `string` won't be prefetched:
-
-```javascript
-var name = 'string';
-require(name);
-```
+_You can check the [detective](https://github.com/substack/node-detective) module
+for more information on the allowed syntaxes._
 
 When done fetching the `callback` will be executed. If an error occurred the
-first argument in the `callback` will become an error.
+first argument in the `callback` will become an `Error` otherwise its `null`.
 
 ```javascript
 box.require.ensure(['/index.js'], function (err) {
@@ -180,7 +204,7 @@ box.require.ensure(['/index.js'], function (err) {
 ```
 
 It is important to note that resolve errors do not appear in the `error` argument,
-but are throwen when `require` or `require.resolve` is called.
+but are throwen when `require` or `require.resolve` is called just like in node.js.
 
 #### box.require.resolve(module)
 
