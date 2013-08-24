@@ -42,11 +42,11 @@ var box = modulebox({
 });
 
 http.createServer(function (req, res) {
-    if (req.url.slice(0, 11) === '/modulebox/') {
-      box.dispatch(req, res);
-    } else {
-      blowDispatch(req, res);
-    }
+  if (req.url.slice(0, 11) === '/modulebox/') {
+    box.dispatch(req, res);
+  } else {
+    blowDispatch(req, res);
+  }
 }).listen(11000, '0.0.0.0', function () {
   console.log('test server ready on http://localhost:11000');
 });
