@@ -14,7 +14,8 @@ var box = modulebox({
     one: path.resolve(__dirname, '..', 'special', 'one.js'),
     two: path.resolve(__dirname, '..', 'special', 'two.js'),
     json: path.resolve(__dirname, '..', 'special', 'json.json'),
-    relative: path.resolve(__dirname, '..', 'special', 'relative.js')
+    relative: path.resolve(__dirname, '..', 'special', 'relative.js'),
+    missing: path.resolve(__dirname, '..', 'special', 'missing.js')
   }
 });
 
@@ -161,7 +162,7 @@ test('special missing request', function (t) {
   bundle.pipe(endpoint(function (err, actual) {
     t.equal(err, null);
 
-    matchResult(t, 'speical_missing', actual, t.end.bind(t));
+    matchResult(t, 'speical_internal_missing', actual, t.end.bind(t));
   }));
 });
 
@@ -174,5 +175,17 @@ test('request modules from both special and complex', function (t) {
     t.equal(err, null);
 
     matchResult(t, 'speical_complex', actual, t.end.bind(t));
+  }));
+});
+
+test('request special module there is missing', function (t) {
+  var bundle = box.dispatch({
+    request: ['missing']
+  });
+
+  bundle.pipe(endpoint(function (err, actual) {
+    t.equal(err, null);
+
+    matchResult(t, 'speical_file_missing', actual, t.end.bind(t));
   }));
 });

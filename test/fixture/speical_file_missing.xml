@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<resolve special="false">{}</resolve>
+<resolve special="true">{"missing":{"name":"Error","message":"Cannot find module 'missing'","code":"MODULE_NOT_FOUND"}}</resolve>
+<map special="false">{}</map>
+<map special="true">{}</map>
+</modules>
