@@ -23,15 +23,19 @@ fs.utimesSync(
 );
 
 var server = http.createServer(function (req, res) {
-  req.pipe( box.dispatch({
-    request: ['/single.js'],
-    acquired: [],
-    source: '/'
-  }) ).pipe(res);
+  box.dispatch(req, res);
 });
 
 function request(href, info, callback) {
-  var send = url.parse(href);
+  var href = url.parse(href, true);
+  delete href.search;
+      href.query = {
+        normal: JSON.stringify([]),
+        special: JSON.stringify([]),
+        from: JSON.stringify('/'),
+        request: JSON.stringify(['/single.js'])
+      };
+  var send = url.parse(url.format(href));
       send.headers = {};
       send.method = info.method || 'GET';
 

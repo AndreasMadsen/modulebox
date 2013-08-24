@@ -4,7 +4,7 @@
 <resolve special="true">{}</resolve>
 <file special="false" path="/syntax_error.js"><![CDATA[/* syntax_error.js */
 module.exports = [, crazy]; #madness
-/* end */]]></file-normal>
+/* end */]]></file>
 <map special="false">{}</map>
 <map special="true">{}</map>
 </modules>

@@ -4,7 +4,7 @@
 <resolve special="true">{}</resolve>
 <file special="false" path="/faulty_require.js"><![CDATA[
 require('faulty');
-]]></file-normal>
+]]></file>
 <map special="false">{"/faulty_require.js":{"faulty":{"name":"SyntaxError","message":"Unexpected token s"}}}</map>
 <map special="true">{}</map>
 </modules>

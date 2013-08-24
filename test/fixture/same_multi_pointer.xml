@@ -4,9 +4,9 @@
 <resolve special="true">{}</resolve>
 <file special="false" path="/pointer.js"><![CDATA[/* pointer.js */
 module.exports = require('/single.js');
-/* end */]]></file-normal>
+/* end */]]></file>
 <file special="false" path="/single.js"><![CDATA[/* single.js */
-/* end */]]></file-normal>
+/* end */]]></file>
 <map special="false">{"/pointer.js":{"/single.js":"/single.js"}}</map>
 <map special="true">{}</map>
 </modules>
