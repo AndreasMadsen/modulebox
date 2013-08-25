@@ -1,7 +1,7 @@
 {
   "name": "modulebox",
   "description": "node.js like module environment in the browser",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Andreas Madsen <amwebdk@gmail.com>",
   "main": "./lib/dispatch.js",
   "scripts": {
