@@ -33,19 +33,10 @@ Test.prototype.open = function (callback) {
   });
 };
 
-function encodeObject(obj) {
-  return encodeURIComponent(JSON.stringify(obj));
-}
-
-Test.prototype.request = function(what, callback) {
+Test.prototype.query = function (query, callback) {
   var href = url.parse(this.remote);
   delete href.search;
-
-  href.query = {};
-  if (what.normal) href.query.normal = JSON.stringify(what.normal);
-  if (what.special) href.query.special = JSON.stringify(what.special);
-  if (what.from) href.query.from = JSON.stringify(what.from);
-  if (what.request) href.query.request = JSON.stringify(what.request);
+  href.query = query;
 
   http.get(url.format(href), function (res) {
     var mtime = null;
@@ -57,6 +48,15 @@ Test.prototype.request = function(what, callback) {
       callback(err, { 'mtime': mtime, 'hash': hash }, content);
     }));
   });
+};
+
+Test.prototype.request = function(what, callback) {
+  this.query({
+    'normal': JSON.stringify(what.normal ? what.normal : []),
+    'special': JSON.stringify(what.special ? what.special : []),
+    'from': JSON.stringify(what.from ? what.from : '/'),
+    'request': JSON.stringify(what.request ? what.request : [])
+  }, callback);
 };
 
 Test.prototype.close = function (callback) {

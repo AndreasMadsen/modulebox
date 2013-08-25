@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<error>{"message":"got an invalid parameter","name":"TypeError"}</error>
+<map special="false">{}</map>
+<map special="true">{}</map>
+</modules>
