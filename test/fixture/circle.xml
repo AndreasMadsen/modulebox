@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<resolve special="false">{"/circle_c.js":"/circle_c.js"}</resolve>
+<resolve special="true">{}</resolve>
+<file special="false" path="/circle_c.js"><![CDATA[
+var a = require('./circle_a.js');
+module.exports = a().toString();
+]]></file>
+<file special="false" path="/circle_a.js"><![CDATA[
+var b = require('./circle_b.js');
+
+module.exports = function a() {
+  return b();
+};
+]]></file>
+<file special="false" path="/circle_b.js"><![CDATA[
+// At this point module.exports hasn't been set, so the default `exports` object
+// is returned
+var a = require('./circle_a.js');
+
+module.exports = function b() {
+  return a.toString();
+};
+]]></file>
+<map special="false">{"/circle_c.js":{"./circle_a.js":"/circle_a.js"},"/circle_a.js":{"./circle_b.js":"/circle_b.js"},"/circle_b.js":{"./circle_a.js":"/circle_a.js"}}</map>
+<map special="true">{}</map>
+</modules>

@@ -208,6 +208,18 @@ test('request file containing syntax error', function (t) {
   });
 });
 
+test('circular dependency tree is correctly resolved', function (t) {
+  server.request({
+    request: ['/circle_c.js']
+  }, function (err, meta, actual) {
+    t.equal(err, null);
+
+    matchResult(t, 'circle', actual, function () {
+      t.end();
+    });
+  });
+});
+
 test('close test server', function (t) {
   server.close(t.end.bind(t));
 });

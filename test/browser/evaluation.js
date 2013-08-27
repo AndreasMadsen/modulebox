@@ -94,4 +94,14 @@ describe('evaluation', function () {
       done(null);
     });
   });
+
+  it('circular dependency tree is evaluated correctly', function (done) {
+    box.require.ensure(['/circle_c.js'], function (err) {
+      assert.equal(err, null);
+
+      assert.equal(box.require('/circle_c.js'), '[object Object]');
+
+      done(null);
+    });
+  });
 });
