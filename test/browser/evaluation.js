@@ -32,7 +32,7 @@ describe('evaluation', function () {
         var produce = box.require('throw');
         setTimeout(function() {
           var error = produce();
-          assert.ok((/\/modulebox\/files\/_special_\/throw\.js/).test(error.stack), 'throw.js exists in stack trace');
+          assert.ok((/\/modulebox\/_special_\/throw\.js/).test(error.stack), 'throw.js exists in stack trace');
 
           done(null);
         }, 0);
