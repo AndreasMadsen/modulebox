@@ -245,6 +245,16 @@ describe('module ensure on a working destination', function () {
     });
   });
 
+  it('require.ensure special with special dependency', function (done) {
+    box.require.ensure(['one'], function (err) {
+      assert.equal(send, 7);
+      assert.equal(err, null);
+      assert.equal(box.require('one'), 'two');
+
+      done(null);
+    });
+  });
+
   it('require.resolve return modulename on normal', function () {
     assert.equal(box.require.resolve('two'), 'two');
   });
