@@ -30,6 +30,6 @@ module.exports = require('./package.json');
   "name": "std",
   "main": "index.js"
 }]]></file>
-<map special="false">{"/complex.js":{"./common":"/common.js","./common.js":"/common.js","./common_require.js":"/common_require.js","/common.js":"/common.js","/common_require.js":"/common_require.js","simple":"/modules/simple/index.js"},"/common_require.js":{"./common":"/common.js"},"/modules/simple/index.js":{"./package.json":"/modules/simple/package.json"}}</map>
+<map special="false">{"/complex.js":{"./common":{"special":false,"value":"/common.js"},"./common.js":{"special":false,"value":"/common.js"},"./common_require.js":{"special":false,"value":"/common_require.js"},"/common.js":{"special":false,"value":"/common.js"},"/common_require.js":{"special":false,"value":"/common_require.js"},"simple":{"special":false,"value":"/modules/simple/index.js"}},"/common_require.js":{"./common":{"special":false,"value":"/common.js"}},"/modules/simple/index.js":{"./package.json":{"special":false,"value":"/modules/simple/package.json"}}}</map>
 <map special="true">{}</map>
 </modules>

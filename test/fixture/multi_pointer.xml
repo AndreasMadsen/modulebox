@@ -7,6 +7,6 @@ module.exports = require('/single.js');
 /* end */]]></file>
 <file special="false" path="/single.js"><![CDATA[/* single.js */
 /* end */]]></file>
-<map special="false">{"/pointer.js":{"/single.js":"/single.js"}}</map>
+<map special="false">{"/pointer.js":{"/single.js":{"special":false,"value":"/single.js"}}}</map>
 <map special="true">{}</map>
 </modules>

@@ -9,5 +9,5 @@ module.exports = require('./_internal.js');
 module.exports = 'internal';
 /* end */]]></file>
 <map special="false">{}</map>
-<map special="true">{"/relative.js":{"./_internal.js":"/_internal.js"}}</map>
+<map special="true">{"/relative.js":{"./_internal.js":{"special":true,"value":"/_internal.js"}}}</map>
 </modules>

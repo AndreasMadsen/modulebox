@@ -23,6 +23,6 @@ module.exports = global.commonLoaded;
 <file special="false" path="/common_require.js"><![CDATA[/* common_require.js */
 require('./common');
 /* end */]]></file>
-<map special="false">{"/complex.js":{"./common":"/common.js","./common.js":"/common.js","./common_require.js":"/common_require.js","/common.js":"/common.js","/common_require.js":"/common_require.js","simple":"/modules/simple/index.js"},"/common_require.js":{"./common":"/common.js"}}</map>
+<map special="false">{"/complex.js":{"./common":{"special":false,"value":"/common.js"},"./common.js":{"special":false,"value":"/common.js"},"./common_require.js":{"special":false,"value":"/common_require.js"},"/common.js":{"special":false,"value":"/common.js"},"/common_require.js":{"special":false,"value":"/common_require.js"},"simple":{"special":false,"value":"/modules/simple/index.js"}},"/common_require.js":{"./common":{"special":false,"value":"/common.js"}}}</map>
 <map special="true">{}</map>
 </modules>

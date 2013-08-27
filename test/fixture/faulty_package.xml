@@ -5,6 +5,6 @@
 <file special="false" path="/faulty_require.js"><![CDATA[
 require('faulty');
 ]]></file>
-<map special="false">{"/faulty_require.js":{"faulty":{"name":"SyntaxError","message":"Unexpected token s"}}}</map>
+<map special="false">{"/faulty_require.js":{"faulty":{"special":false,"value":{"name":"SyntaxError","message":"Unexpected token s"}}}}</map>
 <map special="true">{}</map>
 </modules>

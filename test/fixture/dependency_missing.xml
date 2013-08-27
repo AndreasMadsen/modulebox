@@ -5,6 +5,6 @@
 <file special="false" path="/missing_require.js"><![CDATA[
 require('/missing.js');
 ]]></file>
-<map special="false">{"/missing_require.js":{"/missing.js":{"name":"Error","message":"Cannot find module '/missing.js'","code":"MODULE_NOT_FOUND"}}}</map>
+<map special="false">{"/missing_require.js":{"/missing.js":{"special":false,"value":{"name":"Error","message":"Cannot find module '/missing.js'","code":"MODULE_NOT_FOUND"}}}}</map>
 <map special="true">{}</map>
 </modules>

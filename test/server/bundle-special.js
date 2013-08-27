@@ -167,6 +167,16 @@ test('request special module there is missing', function (t) {
   });
 });
 
+test('request normal there then requires special', function (t) {
+  server.request({
+    request: ['/special_require.js']
+  }, function (err, meta, actual) {
+    t.equal(err, null);
+
+    matchResult(t, 'special_from_normal', actual, t.end.bind(t));
+  });
+});
+
 test('close test server', function (t) {
   server.close(t.end.bind(t));
 });

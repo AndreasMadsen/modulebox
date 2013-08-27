@@ -22,6 +22,6 @@ module.exports = function b() {
   return a.toString();
 };
 ]]></file>
-<map special="false">{"/circle_c.js":{"./circle_a.js":"/circle_a.js"},"/circle_a.js":{"./circle_b.js":"/circle_b.js"},"/circle_b.js":{"./circle_a.js":"/circle_a.js"}}</map>
+<map special="false">{"/circle_c.js":{"./circle_a.js":{"special":false,"value":"/circle_a.js"}},"/circle_a.js":{"./circle_b.js":{"special":false,"value":"/circle_b.js"}},"/circle_b.js":{"./circle_a.js":{"special":false,"value":"/circle_a.js"}}}</map>
 <map special="true">{}</map>
 </modules>

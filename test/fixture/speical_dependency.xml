@@ -9,5 +9,5 @@ module.exports = require('two');
 module.exports = 'two';
 /* end */]]></file>
 <map special="false">{}</map>
-<map special="true">{"/one.js":{"two":"/two.js"}}</map>
+<map special="true">{"/one.js":{"two":{"special":true,"value":"/two.js"}}}</map>
 </modules>
