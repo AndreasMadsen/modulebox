@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modules>
+<resolve special="false">{"/special_require.js":"/special_require.js"}</resolve>
+<resolve special="true">{}</resolve>
+<file special="false" path="/special_require.js"><![CDATA[
+var one = require('one');
+]]></file>
+<file special="true" path="/one.js"><![CDATA[/* special/one.js */
+module.exports = require('two');
+/* end */]]></file>
+<file special="true" path="/two.js"><![CDATA[/* special/two.js */
+module.exports = 'two';
+/* end */]]></file>
+<map special="false">{"/special_require.js":{"one":{"special":true,"value":"/one.js"}}}</map>
+<map special="true">{"/one.js":{"two":{"special":true,"value":"/two.js"}}}</map>
+</modules>
