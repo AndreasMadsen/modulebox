@@ -163,7 +163,7 @@ describe('module ensure on a working destination', function () {
     assert.equal(errors[0].code, 'MODULE_NOT_FOUND');
 
     // The error object is expected to be the same
-    assert.strictEqual(errors[0], errors[1]);
+    assert.notStrictEqual(errors[0], errors[1]);
   });
 
   it('require.resolve call should throw error', function () {
@@ -188,7 +188,7 @@ describe('module ensure on a working destination', function () {
     assert.equal(errors[0].code, 'MODULE_NOT_FOUND');
 
     // The error object is expected to be the same
-    assert.strictEqual(errors[0], errors[1]);
+    assert.notStrictEqual(errors[0], errors[1]);
   });
 
   it('require.ensure returns no error if module was found', function (done) {
