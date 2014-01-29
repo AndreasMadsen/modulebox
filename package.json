@@ -1,7 +1,7 @@
 {
   "name": "modulebox",
   "description": "node.js like module environment in the browser",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "author": "Andreas Madsen <amwebdk@gmail.com>",
   "main": "./lib/dispatch.js",
   "scripts": {
@@ -32,9 +32,5 @@
     "tap": "0.4.x",
     "blow": "0.7.x"
   },
-  "license": "MIT",
-  "engines": {
-    "node": "0.10 || 0.11",
-    "npm": "1"
-  }
+  "license": "MIT"
 }
